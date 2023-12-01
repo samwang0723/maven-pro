@@ -6,52 +6,51 @@
 
 /* CSS styles */
 .stock-container {
-    width: 260px; /* Adjust the width as needed */
-    border: 1px solid #000; /* Optional border */
-    padding: 4px; /* Spacing around the content */
-    box-sizing: border-box; /* Include padding and border in the width */
-    background: #000;
+  width: 260px; /* Adjust the width as needed */
+  border: 1px solid #000; /* Optional border */
+  padding: 4px; /* Spacing around the content */
+  box-sizing: border-box; /* Include padding and border in the width */
+  background: #000;
 }
 
 .stock-name {
-    font-size: 14px;
-    color: #fff;
-    font-weight: bold; /* Make the stock name bold */
-    margin-bottom: 2px; /* Spacing between the stock name and the info */
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold; /* Make the stock name bold */
+  margin-bottom: 2px; /* Spacing between the stock name and the info */
 }
 
 .stock-info {
-    display: flex; /* Use flexbox for the 3-column layout */
-    justify-content: space-between; /* Distribute space evenly between columns */
+  display: flex; /* Use flexbox for the 3-column layout */
+  justify-content: space-between; /* Distribute space evenly between columns */
 }
 
 .stock-price,
 .stock-change {
-    font-size: 12px;
-    flex-basis: 33%; /* Each column takes up roughly one third of the space */
-    text-align: left; /* Center the text within each column */
-    box-sizing: border-box; /* Include padding in the width */
-    color: #F92855;
+  font-size: 12px;
+  flex-basis: 33%; /* Each column takes up roughly one third of the space */
+  text-align: left; /* Center the text within each column */
+  box-sizing: border-box; /* Include padding in the width */
+  color: #f92855;
 }
 
 .stock-volume {
-    font-size: 12px;
-    flex-basis: 33%; /* Each column takes up roughly one third of the space */
-    text-align: right; /* Center the text within each column */
-    box-sizing: border-box; /* Include padding in the width */
-    color: #F92855;
+  font-size: 12px;
+  flex-basis: 33%; /* Each column takes up roughly one third of the space */
+  text-align: right; /* Center the text within each column */
+  box-sizing: border-box; /* Include padding in the width */
+  color: #f92855;
 }
 
 /* Optional: Add some responsiveness to the layout */
 @media (max-width: 250px) {
-    .stock-info {
-        flex-direction: column; /* Stack columns vertically on small screens */
-    }
-    .stock-price,
-    .stock-change,
-    .stock-volume {
-        flex-basis: 100%; /* Each column takes full width */
-        margin-bottom: 5px; /* Spacing between stacked columns */
-    }
+  .stock-info {
+    flex-direction: column; /* Stack columns vertically on small screens */
+  }
+  .stock-price,
+  .stock-change,
+  .stock-volume {
+    flex-basis: 100%; /* Each column takes full width */
+    margin-bottom: 5px; /* Spacing between stacked columns */
+  }
 }
-
