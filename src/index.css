@@ -458,9 +458,3 @@ textarea {
   vertical-align: top;
   max-width: 100%;
 }
-
-.chart-container {
-  width: 250px;
-  height: 160px;
-  background: #000;
-}
