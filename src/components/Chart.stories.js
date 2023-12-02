@@ -30,12 +30,13 @@ function parseStockData(stockData) {
   return stockData.map((item) => {
     // Return a new object with only the required fields
     return {
+      timestamp: parseDateToTimestamp(item.date),
       open: item.open,
-      close: item.close,
       high: item.high,
       low: item.low,
+      close: item.close,
       volume: item.tradeShares / 1000,
-      timestamp: parseDateToTimestamp(item.date),
+      turnover: item.turnover,
     };
   });
 }

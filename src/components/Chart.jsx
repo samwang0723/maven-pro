@@ -55,10 +55,35 @@ const Chart = (props) => {
             noChangeColor: '#888888',
           },
         ],
+        tooltip: {
+          // 'always' | 'follow_cross' | 'none'
+          showRule: 'none',
+        },
       },
     });
 
     const chart = init(props.id);
+
+    // configure precision with different price.
+    let precision = 2;
+    const lastClose = props.data[0].close;
+    if (lastClose >= 100 && lastClose < 500) {
+      precision = 1;
+    } else {
+      precision = 0;
+    }
+    chart.setPriceVolumePrecision(precision, 0);
+
+    chart.createIndicator(
+      {
+        name: 'VOL',
+        calcParams: [],
+      },
+      false,
+      {
+        height: 30,
+      }
+    );
     chart.applyNewData(props.data);
     chart.setStyles('red_rise_green_fall');
     chart.setStyles({
