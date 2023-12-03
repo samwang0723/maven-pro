@@ -5,3 +5,19 @@
   justify-items: center; /* Center items horizontally */
   align-items: center; /* Center items vertically */
 }
+
+/* Media query for screens larger than 530px */
+@media (min-width: 530px) {
+  .grid-container {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    max-width: 530px;
+  }
+}
+
+/* Media query for screens larger than 800px */
+@media (min-width: 800px) {
+  .grid-container {
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    max-width: 800px;
+  }
+}
