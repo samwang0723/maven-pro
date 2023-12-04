@@ -78,6 +78,7 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
         width: chartContainerRef.current.clientWidth,
         height: CHART_HEIGHT,
         layout: {
+          fontSize: 11,
           textColor: 'white',
           background: { type: 'solid', color: 'black' },
         },
@@ -89,12 +90,16 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
             color: gridColor,
           },
         },
-        rightPriceScale: {
+        leftPriceScale: {
           borderColor: gridColor,
+          visible: true,
+        },
+        rightPriceScale: {
+          visible: false,
         },
         timeScale: {
           borderColor: gridColor,
-          rightOffset: 1,
+          rightOffset: 2,
           fixLeftEdge: true,
           ticksVisible: true,
         },
@@ -115,6 +120,7 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
         borderUpColor: red,
         wickDownColor: green,
         wickUpColor: red,
+        priceScaleId: 'left',
       });
       candleSeries.priceScale().applyOptions({
         scaleMargins: {
@@ -164,11 +170,6 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
 
       candleSeries.setData(candlestickData);
       volumeSeries.setData(volumeData);
-      chart.applyOptions({
-        layout: {
-          fontSize: 11,
-        },
-      });
 
       chart.timeScale().fitContent();
 
