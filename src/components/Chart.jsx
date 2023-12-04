@@ -1,176 +1,178 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { init, dispose, registerStyles } from 'klinecharts';
+import { createChart } from 'lightweight-charts';
 import './Chart.css';
 
-const Chart = (props) => {
-  useEffect(() => {
-    const red = '#F92855';
-    const green = '#2DC08E';
+const red = 'rgba(249, 40, 85, 1.0)';
+const green = 'rgba(45, 192, 142, 1.0)';
+const gridColor = '#1E1E1E';
+const CHART_HEIGHT = 200;
 
-    const alphaRed = 'rgba(249, 40, 85, .7)';
-    const alphaGreen = 'rgba(45, 192, 142, .7)';
-
-    registerStyles('red_rise_green_fall', {
-      candle: {
-        bar: {
-          upColor: red,
-          downColor: green,
-          upBorderColor: red,
-          downBorderColor: green,
-          upWickColor: red,
-          downWickColor: green,
-        },
-        priceMark: {
-          last: {
-            upColor: red,
-            downColor: green,
-          },
-        },
-      },
-      indicator: {
-        ohlc: {
-          upColor: alphaRed,
-          downColor: alphaGreen,
-        },
-        bars: [
-          {
-            style: 'fill',
-            borderStyle: 'solid',
-            borderSize: 1,
-            borderDashedValue: [2, 2],
-            upColor: alphaRed,
-            downColor: alphaGreen,
-            noChangeColor: '#888888',
-          },
-        ],
-        circles: [
-          {
-            style: 'fill',
-            borderStyle: 'solid',
-            borderSize: 1,
-            borderDashedValue: [2, 2],
-            upColor: alphaRed,
-            downColor: alphaGreen,
-            noChangeColor: '#888888',
-          },
-        ],
-        tooltip: {
-          // 'always' | 'follow_cross' | 'none'
-          showRule: 'none',
-        },
-      },
-    });
-
-    const chart = init(props.id);
-
-    // configure precision with different price.
-    let precision = 2;
-    const lastClose = props.data[0].close;
-    if (lastClose >= 100 && lastClose < 500) {
-      precision = 1;
-    } else {
-      precision = 0;
+// identify highest and lowest price from data loop
+// and attach marker on series
+function markHighLow(series, data) {
+  let highest = data[0];
+  let lowest = data[0];
+  for (let i = 1; i < data.length; i++) {
+    if (data[i].high > highest.high) {
+      highest = data[i];
     }
-    chart.setPriceVolumePrecision(precision, 0);
+    if (data[i].low < lowest.low) {
+      lowest = data[i];
+    }
+  }
+  const mData = [
+    {
+      time: highest.timestamp,
+      position: 'aboveBar',
+      color: 'lightgrey',
+      shape: 'arrowDown',
+      text: String(highest.high),
+    },
+    {
+      time: lowest.timestamp,
+      position: 'belowBar',
+      color: 'lightgrey',
+      shape: 'arrowUp',
+      text: String(lowest.low),
+    },
+  ];
+  mData.sort((a, b) => {
+    if (a.time < b.time) {
+      return -1;
+    }
+    return 0;
+  });
+  series.setMarkers(mData);
+}
 
-    chart.createIndicator(
-      {
-        name: 'VOL',
-        calcParams: [],
-      },
-      false,
-      {
-        height: 30,
-      }
-    );
-    chart.applyNewData(props.data);
-    chart.setStyles('red_rise_green_fall');
-    chart.setStyles({
-      grid: {
-        show: true,
-        horizontal: {
-          show: true,
-          size: 0.5,
-          color: '#2B2928',
-          style: 'dashed',
-          dashedValue: [2, 2],
+const Chart = ({ id, data, stockName, close, diff, diffPercent }) => {
+  const chartContainerRef = useRef();
+
+  useEffect(() => {
+    if (chartContainerRef.current) {
+      const chart = createChart(chartContainerRef.current, {
+        width: chartContainerRef.current.clientWidth,
+        height: CHART_HEIGHT,
+        layout: {
+          textColor: 'white',
+          background: { type: 'solid', color: 'black' },
         },
-        vertical: {
-          show: true,
-          size: 0.5,
-          color: '#2B2928',
-          style: 'dashed',
-          dashedValue: [2, 2],
-        },
-      },
-      yAxis: {
-        position: 'right',
-        inside: true,
-        axisLine: {
-          show: true,
-          color: '#2B2928',
-          size: 0.5,
-        },
-        tickText: {
-          size: 10,
-        },
-      },
-      xAxis: {
-        show: true,
-        size: 'auto',
-        axisLine: {
-          show: true,
-          color: '#2B2928',
-          size: 0.5,
-        },
-        tickText: {
-          size: 10,
-        },
-      },
-      candle: {
-        type: 'candle_up_stroke',
-        tooltip: {
-          showRule: 'none',
-        },
-        priceMark: {
-          last: {
-            text: {
-              size: 10,
-            },
+        grid: {
+          vertLines: {
+            color: gridColor,
+          },
+          horzLines: {
+            color: gridColor,
           },
         },
-      },
-      separator: {
-        size: 1,
-        color: '#2B2928',
-        fill: true,
-        activeBackgroundColor: 'rgba(230, 230, 230, .15)',
-      },
-      crosshair: {
-        show: false,
-      },
-    });
+        rightPriceScale: {
+          borderColor: gridColor,
+        },
+        timeScale: {
+          borderColor: gridColor,
+          rightOffset: 1,
+          fixLeftEdge: true,
+          ticksVisible: true,
+        },
+      });
 
-    chart.setZoomEnabled(false);
-    chart.setScrollEnabled(false);
-    chart.setBarSpace(8);
-    chart.setOffsetRightDistance(42);
+      // configure precision with different price.
+      let precision = 2;
+      const lastClose = data[0].close;
+      if (lastClose >= 100 && lastClose < 500) {
+        precision = 1;
+      } else {
+        precision = 0;
+      }
+      const candleSeries = chart.addCandlestickSeries({
+        upColor: red,
+        downColor: green,
+        borderDownColor: green,
+        borderUpColor: red,
+        wickDownColor: green,
+        wickUpColor: red,
+      });
+      candleSeries.priceScale().applyOptions({
+        scaleMargins: {
+          // positioning the price scale for the area series
+          top: 0.03,
+          bottom: 0.22,
+        },
+      });
+      candleSeries.applyOptions({
+        priceFormat: {
+          type: 'custom',
+          precision: precision,
+          formatter: (price) => {
+            return price.toFixed(precision);
+          },
+        },
+      });
+      markHighLow(candleSeries, data);
 
-    return () => {
-      dispose(props.id);
-    };
-  });
+      const volumeSeries = chart.addHistogramSeries({
+        color: '#5D5D5D',
+        priceFormat: {
+          type: 'volume',
+        },
+        priceScaleId: '',
+      });
+      volumeSeries.priceScale().applyOptions({
+        scaleMargins: {
+          top: 0.8, // highest point of the series will be 70% away from the top
+          bottom: 0,
+        },
+      });
+
+      // Convert the data to the format required by Lightweight Charts
+      const candlestickData = data.map((item) => ({
+        time: item.timestamp, // assuming the timestamp is in milliseconds
+        open: item.open,
+        high: item.high,
+        low: item.low,
+        close: item.close,
+      }));
+
+      const volumeData = data.map((item) => ({
+        time: item.timestamp, // assuming the timestamp is in milliseconds
+        value: item.volume,
+      }));
+
+      candleSeries.setData(candlestickData);
+      volumeSeries.setData(volumeData);
+      chart.applyOptions({
+        layout: {
+          fontSize: 11,
+        },
+      });
+
+      chart.timeScale().fitContent();
+
+      return () => {
+        chart.remove();
+      };
+    }
+  }, [id, data]);
+
+  // price color if diff contains +,use red,otherwise use green
+  const priceColor = diff.startsWith('+') ? red : green;
 
   return (
     <div className="stock-container">
-      <div className="stock-name">{props.stockName}</div>
+      <div className="stock-name">{stockName}</div>
       <div className="stock-info">
-        <div className="stock-price">{props.close}</div>
-        <div className="stock-change">{props.diff}</div>
-        <div className="stock-volume">{props.diffPercent}</div>
+        <div className="stock-price" style={{ color: priceColor }}>
+          {close}
+        </div>
+        <div className="stock-change" style={{ color: priceColor }}>
+          {diff}
+        </div>
+        <div className="stock-percent" style={{ color: priceColor }}>
+          {diffPercent}
+        </div>
       </div>
-      <div id={props.id} className="chart-container" />
+      <div ref={chartContainerRef} id={id} />
     </div>
   );
 };
@@ -178,7 +180,7 @@ const Chart = (props) => {
 Chart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      time: PropTypes.number.isRequired,
+      timestamp: PropTypes.string.isRequired,
       open: PropTypes.number.isRequired,
       high: PropTypes.number.isRequired,
       low: PropTypes.number.isRequired,
