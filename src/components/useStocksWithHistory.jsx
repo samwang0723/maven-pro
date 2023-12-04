@@ -14,7 +14,9 @@ const useStocksWithHistory = (bearerToken, startDate) => {
         };
         const stockListResponse = await fetch(
           'https://daily.jarvis-stock.tw/v1/pickedstocks',
-          { headers }
+          { 
+            headers, 
+          }
         );
         if (!stockListResponse.ok) {
           throw new Error(`HTTP error! status: ${stockListResponse.status}`);
@@ -41,11 +43,11 @@ const useStocksWithHistory = (bearerToken, startDate) => {
             const historyData = await historyResponse.json();
             return {
               id: stock.stockID,
-              stockName: stock.stockID,
+              stockName: stock.stockID + ' ' + stock.name,
               close: stock.close,
               diff: stock.diff,
               diffPercent: stock.quoteChange + '%',
-              data: historyData.entries,
+              input: historyData.entries,
             };
           }
         );

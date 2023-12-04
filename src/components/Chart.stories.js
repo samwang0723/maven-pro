@@ -8,21 +8,6 @@ export default {
 
 const Template = (args) => <Chart {...args} />;
 
-function parseStockData(stockData) {
-  return stockData.map((item) => {
-    // Return a new object with only the required fields
-    return {
-      timestamp: item.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'),
-      open: item.open,
-      high: item.high,
-      low: item.low,
-      close: item.close,
-      volume: Number(item.tradeShares),
-      turnover: item.turnover,
-    };
-  });
-}
-
 const jsonData = [
   {
     id: '488689144961171804',
@@ -458,17 +443,9 @@ const jsonData = [
   },
 ];
 
-const dataArray = parseStockData(jsonData);
-dataArray.sort((a, b) => {
-  if (a.timestamp < b.timestamp) {
-    return -1;
-  }
-  return 0;
-});
-
 export const Default = Template.bind({});
 Default.args = {
-  data: dataArray,
+  input: jsonData,
   id: 'chart',
   stockName: '2330 台積電',
   close: 575,
