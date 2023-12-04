@@ -8,6 +8,21 @@ const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
 const CHART_HEIGHT = 200;
 
+function parseStockData(stockData) {
+  return stockData.map((item) => {
+    // Return a new object with only the required fields
+    return {
+      timestamp: item.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'),
+      open: item.open,
+      high: item.high,
+      low: item.low,
+      close: item.close,
+      volume: Number(item.tradeShares),
+      turnover: item.turnover,
+    };
+  });
+}
+
 // identify highest and lowest price from data loop
 // and attach marker on series
 function markHighLow(series, data) {
@@ -46,7 +61,15 @@ function markHighLow(series, data) {
   series.setMarkers(mData);
 }
 
-const Chart = ({ id, data, stockName, close, diff, diffPercent }) => {
+const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
+  const data = parseStockData(input);
+  data.sort((a, b) => {
+    if (a.timestamp < b.timestamp) {
+      return -1;
+    }
+    return 0;
+  });
+
   const chartContainerRef = useRef();
 
   useEffect(() => {
@@ -82,7 +105,7 @@ const Chart = ({ id, data, stockName, close, diff, diffPercent }) => {
       const lastClose = data[0].close;
       if (lastClose >= 100 && lastClose < 500) {
         precision = 1;
-      } else {
+      } else if (lastClose >= 500) {
         precision = 0;
       }
       const candleSeries = chart.addCandlestickSeries({
@@ -156,7 +179,7 @@ const Chart = ({ id, data, stockName, close, diff, diffPercent }) => {
   }, [id, data]);
 
   // price color if diff contains +,use red,otherwise use green
-  const priceColor = diff.startsWith('+') ? red : green;
+  const priceColor = diff > 0 ? red : green;
 
   return (
     <div className="stock-container">
@@ -178,7 +201,7 @@ const Chart = ({ id, data, stockName, close, diff, diffPercent }) => {
 };
 
 Chart.propTypes = {
-  data: PropTypes.arrayOf(
+  input: PropTypes.arrayOf(
     PropTypes.shape({
       timestamp: PropTypes.string.isRequired,
       open: PropTypes.number.isRequired,
