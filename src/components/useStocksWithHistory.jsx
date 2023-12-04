@@ -13,7 +13,7 @@ const useStocksWithHistory = (bearerToken, startDate) => {
           'Content-Type': 'application/json',
         };
         const stockListResponse = await fetch(
-          'http://k3d-k3s-default-server-0.orb.local:8080/v1/pickedstocks',
+          'https://daily.jarvis-stock.tw/v1/pickedstocks',
           { headers }
         );
         if (!stockListResponse.ok) {
@@ -31,7 +31,7 @@ const useStocksWithHistory = (bearerToken, startDate) => {
               },
             };
             const historyResponse = await fetch(
-              `http://k3d-k3s-default-server-0.orb.local:8080/v1/dailycloses`,
+              `https://daily.jarvis-stock.tw/v1/dailycloses`,
               {
                 method: 'POST',
                 headers: headers,
