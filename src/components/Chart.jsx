@@ -1,12 +1,44 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createChart } from 'lightweight-charts';
+import Badge from 'react-bootstrap/Badge';
 import './Chart.css';
 
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
 const CHART_HEIGHT = 200;
+
+function rateBadge(analysis) {
+  var result = <Badge bg="secondary"> - </Badge>;
+  var count = 0;
+  count += analysis.concentration1 > 0 ? 1 : 0;
+  count += analysis.concentration5 > 0 ? 1 : 0;
+  count += analysis.concentration10 > 0 ? 1 : 0;
+  count += analysis.concentration20 > 0 ? 1 : 0;
+  count += analysis.concentration60 > 0 ? 1 : 0;
+
+  if (count == 5) {
+    result = (
+      <Badge bg="warning" text="dark">
+        五燈
+      </Badge>
+    );
+  } else if (count == 4) {
+    result = <Badge bg="success">四星</Badge>;
+  }
+
+  count += analysis.foreign > 0 ? 1 : 0;
+  count += analysis.trust > 0 ? 1 : 0;
+  count += analysis.foreign10 > 0 ? 1 : 0;
+  count += analysis.trust10 > 0 ? 1 : 0;
+
+  if (count == 9) {
+    result = <Badge bg="danger">滿貫</Badge>;
+  }
+
+  return result;
+}
 
 function parseStockData(stockData) {
   return stockData.map((item) => {
@@ -61,7 +93,15 @@ function markHighLow(series, data) {
   series.setMarkers(mData);
 }
 
-const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
+const Chart = ({
+  id,
+  input,
+  stockName,
+  close,
+  diff,
+  diffPercent,
+  analysis,
+}) => {
   const data = parseStockData(input);
   data.sort((a, b) => {
     if (a.timestamp < b.timestamp) {
@@ -181,10 +221,17 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
 
   // price color if diff contains +,use red,otherwise use green
   const priceColor = diff > 0 ? red : green;
-
+  const badge = rateBadge(analysis);
   return (
     <div className="stock-container">
-      <div className="stock-name">{stockName}</div>
+      <div className="stock-title">
+        <div className="stock-name">{stockName}</div>
+        <div className="stock-analysis">
+          {badge}
+          {analysis.foreign > 0 ? <Badge bg="primary">外資</Badge> : null}
+          {analysis.trust > 0 ? <Badge bg="primary">投信</Badge> : null}
+        </div>
+      </div>
       <div className="stock-info">
         <div className="stock-price" style={{ color: priceColor }}>
           {close}
@@ -204,12 +251,13 @@ const Chart = ({ id, input, stockName, close, diff, diffPercent }) => {
 Chart.propTypes = {
   input: PropTypes.arrayOf(
     PropTypes.shape({
-      timestamp: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
       open: PropTypes.number.isRequired,
       high: PropTypes.number.isRequired,
       low: PropTypes.number.isRequired,
       close: PropTypes.number.isRequired,
-      volume: PropTypes.number.isRequired,
+      tradeShares: PropTypes.string.isRequired,
+      turnover: PropTypes.string.isRequired,
     })
   ).isRequired,
   id: PropTypes.string.isRequired,
@@ -217,6 +265,7 @@ Chart.propTypes = {
   close: PropTypes.number.isRequired,
   diff: PropTypes.string.isRequired,
   diffPercent: PropTypes.string.isRequired,
+  analysis: PropTypes.object.isRequired,
 };
 
 export default Chart;

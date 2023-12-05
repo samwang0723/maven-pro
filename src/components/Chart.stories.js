@@ -451,4 +451,15 @@ Default.args = {
   close: 575,
   diff: '+23.5',
   diffPercent: '+2.56%',
+  analysis: {
+    concentration1: -9.3,
+    concentration5: 1.5,
+    concentration10: 4.0,
+    concentration20: -0.4,
+    concentration60: 2.0,
+    foreign: 300,
+    trust: 200,
+    foreign10: 4560,
+    trust10: 320,
+  },
 };

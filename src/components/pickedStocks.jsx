@@ -1,6 +1,28 @@
 import { useState, useEffect } from 'react';
 
-const useStocksWithHistory = (bearerToken, startDate) => {
+function constructPayload(stock, history) {
+  return {
+    id: stock.stockID,
+    stockName: stock.stockID + ' ' + stock.name,
+    close: stock.close,
+    diff: stock.diff,
+    diffPercent: stock.quoteChange + '%',
+    input: history.entries,
+    analysis: {
+      concentration1: stock.concentration1,
+      concentration5: stock.concentration5,
+      concentration10: stock.concentration10,
+      concentration20: stock.concentration20,
+      concentration60: stock.concentration60,
+      foreign: stock.foreign,
+      trust: stock.trust,
+      foreign10: stock.foreign10,
+      trust10: stock.trust10,
+    },
+  };
+}
+
+const pickedStocks = (bearerToken, startDate) => {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,13 +31,13 @@ const useStocksWithHistory = (bearerToken, startDate) => {
     const fetchStocks = async () => {
       try {
         const headers = {
-          'Authorization': `Bearer ${bearerToken}`,
+          Authorization: `Bearer ${bearerToken}`,
           'Content-Type': 'application/json',
         };
         const stockListResponse = await fetch(
           'https://daily.jarvis-stock.tw/v1/pickedstocks',
-          { 
-            headers, 
+          {
+            headers,
           }
         );
         if (!stockListResponse.ok) {
@@ -41,14 +63,7 @@ const useStocksWithHistory = (bearerToken, startDate) => {
               }
             );
             const historyData = await historyResponse.json();
-            return {
-              id: stock.stockID,
-              stockName: stock.stockID + ' ' + stock.name,
-              close: stock.close,
-              diff: stock.diff,
-              diffPercent: stock.quoteChange + '%',
-              input: historyData.entries,
-            };
+            return constructPayload(stock, historyData);
           }
         );
         const stocksWithHistory = await Promise.all(stocksWithHistoryPromises);
@@ -66,4 +81,4 @@ const useStocksWithHistory = (bearerToken, startDate) => {
   return { stocks, loading, error };
 };
 
-export default useStocksWithHistory;
+export default pickedStocks;
