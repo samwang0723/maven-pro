@@ -117,6 +117,8 @@ const Chart = ({
       const chart = createChart(chartContainerRef.current, {
         width: chartContainerRef.current.clientWidth,
         height: CHART_HEIGHT,
+        handleScroll: false,
+        handleScale: false,
         layout: {
           fontSize: 11,
           textColor: 'white',
@@ -263,7 +265,7 @@ Chart.propTypes = {
   id: PropTypes.string.isRequired,
   stockName: PropTypes.string.isRequired,
   close: PropTypes.number.isRequired,
-  diff: PropTypes.string.isRequired,
+  diff: PropTypes.number.isRequired,
   diffPercent: PropTypes.string.isRequired,
   analysis: PropTypes.object.isRequired,
 };

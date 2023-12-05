@@ -1,15 +1,42 @@
 import React from 'react';
 import './App.css';
 import ChartGrid from './components/ChartGrid';
+import login from './api/login';
+import { Spinner, Alert } from 'react-bootstrap';
 
 function App() {
-  const args = {
-    bearerToken:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlMzYwYWYyOS1hYzFhLTQ2OTctYTNhNi0wZDE0YmExNzI3ZjgiLCJhdWQiOiJqYXJ2aXMiLCJpc3MiOiJzYW0ud2FuZy4wNzIzQGdtYWlsLmNvbSIsInN1YiI6IjQ4MzcyNzYyOTE0MTE0Nzk1MSIsImV4cCI6MTcwMjA4MTI3MH0.xl1Fs-gxcSDR9AVgIw9-TiY3ycdgonHuUBnNSIbeP8o',
-  };
+  const {bearerToken, loading, error} = login(
+    'sam.wang.0723@gmail.com',
+    'abcd1234'
+  );
+  const args = { bearerToken: bearerToken };
+
+  // Display a spinner while loading
+  if (loading) {
+    return (
+      <div className="App centered-content bg-dark text-white">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
+
+  // Display an error message if there is an error
+  if (error) {
+    return (
+      <div className="App centered-content bg-dark text-white">
+        <Alert variant="danger">
+          Error: {error.message}
+        </Alert>
+      </div>
+    );
+  }
+
+  // Display the ChartGrid if there is a bearerToken
   return (
     <div className="App centered-content bg-dark text-white">
-     <ChartGrid {...args} />
+      {bearerToken ? <ChartGrid {...args} /> : <div>Please log in.</div>}
     </div>
   );
 }

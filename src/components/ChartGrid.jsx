@@ -2,10 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from './Chart';
 import "./ChartGrid.css";
-import pickedStocks from './pickedStocks';
+import pickedStocks from '../api/pickedStocks';
+
+function getDateTwoMonthsAgo() {
+  const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() - 2);
+
+  const year = currentDate.getFullYear();
+  const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+  const day = ('0' + currentDate.getDate()).slice(-2);
+
+  return `${year}${month}${day}`;
+}
 
 const ChartGrid = ({bearerToken}) => {
-  const startDate = "20231001"; // Set the start date for the history search
+  const startDate = getDateTwoMonthsAgo(); // Set the start date for the history search
   const { stocks, loading, error } = pickedStocks(bearerToken, startDate);
 
   if (loading) return <div>Loading...</div>;
@@ -14,7 +25,8 @@ const ChartGrid = ({bearerToken}) => {
   return (
     <div className="grid-container">
       {stocks.map((stock) => (
-        <Chart key={stock.StockID} {...stock} />
+        console.log(stock),
+        <Chart key={stock.id} {...stock} />
       ))}
     </div>
   );
