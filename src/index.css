@@ -21,27 +21,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-p,
-label {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 100%;
-  line-height: 1;
-  font-family: inherit;
-  vertical-align: baseline;
-  vertical-align: middle;
-  line-height: normal;
-  overflow: visible;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-@media screen and (min-width: 40em) {
-  .page.lists-show nav {
-    text-align: left;
-  }
-}
-
