@@ -1,12 +1,5 @@
 .App {
   text-align: center;
-  padding: 20px;
-}
-
-.centered-content {
-  display: grid;
-  place-items: center; /* Center horizontally and vertically */
-  min-height: 100vh; /* Full height of the viewport */
 }
 
 .App-logo {
