@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { jarvisApi } from '../../core/api';
-import { JarvisV1LoginRequest } from '../../modules/jarvis-api';
+import { getJarvisApi, updateJarvisApiConfig } from '../../core/api';
+import { JarvisV1LoginRequest, V1LoginResponse } from '../../modules/jarvis-api';
 
 const initialState = {
   loading: false,
@@ -13,14 +13,14 @@ interface LoginParams {
   password: string;
 }
 
-export const performLogin = createAsyncThunk(
+export const authLogin = createAsyncThunk(
   'auth/login',
   (params: LoginParams) => {
     const request: JarvisV1LoginRequest = {
       body: params,
     };
-    console.log('request', request);
-    return jarvisApi.jarvisV1Login(request).then((res) => res.accessToken);
+    const jarvisApi = getJarvisApi();
+    return jarvisApi.jarvisV1Login(request).then((res: V1LoginResponse) => res.accessToken);
   }
 );
 
@@ -29,17 +29,18 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(performLogin.pending, (state) => {
+    builder.addCase(authLogin.pending, (state) => {
       state.loading = true;
       return state;
     });
-    builder.addCase(performLogin.fulfilled, (state, action) => {
+    builder.addCase(authLogin.fulfilled, (state, action) => {
       state.loading = false;
       state.accessToken = action.payload;
       state.error = '';
+      updateJarvisApiConfig(action.payload);
       return state;
     });
-    builder.addCase(performLogin.rejected, (state) => {
+    builder.addCase(authLogin.rejected, (state) => {
       state.loading = false;
       state.accessToken = null;
       state.error = 'Login failed';

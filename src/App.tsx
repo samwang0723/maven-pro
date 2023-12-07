@@ -1,32 +1,31 @@
 import React from 'react';
-import { useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import './App.css';
-import { AppDispatch } from './features/store';
-import { useSelector, useDispatch } from 'react-redux';
-import { performLogin, selectAuth } from './features/slices/authSlice';
+import Login from './components/auth/Login';
+import ChartGrid from './components/stock/ChartGrid';
 
 interface AppProps {
   name?: string;
 }
 
 const App: React.FC<AppProps> = ({ name }) => {
-  const auth = useSelector(selectAuth);
-  const dispatch: AppDispatch = useDispatch();
-  useEffect(() => {
-    if (auth.accessToken) {
-      return;
-    }
-
-    dispatch(
-      performLogin({
-        email: 'sam.wang.0723@gmail.com',
-        password: 'abcd1234',
-      })
-    );
-  }, []);
-
-  console.log('auth', auth);
-  return <div className="App">{auth.accessToken}</div>;
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/chart-grid" element={<ChartGrid />} />
+          {/* Navigate to login page if no other route matches */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
