@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux';
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -7,24 +8,39 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Login from './components/auth/Login';
+import store from './features/store';
+import DrawerLayout from './components/general/DrawerLayout';
 import ChartGrid from './components/stock/ChartGrid';
 
-interface AppProps {
-  name?: string;
-}
+const App: React.FC = () => {
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'cupcake';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
 
-const App: React.FC<AppProps> = ({ name }) => {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/chart-grid" element={<ChartGrid />} />
-          {/* Navigate to login page if no other route matches */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="*"
+              element={
+                <DrawerLayout>
+                  <Routes>
+                    <Route path="/self-picked" element={<ChartGrid />} />
+                    {/* Navigate to login page if no other route matches */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* Add other routes here */}
+                  </Routes>
+                </DrawerLayout>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </Provider>
   );
 };
 
