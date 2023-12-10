@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { createChart } from 'lightweight-charts';
 
 const red = 'rgba(249, 40, 85, 1.0)';
@@ -99,7 +98,7 @@ const Chart = ({
   analysis,
 }) => {
   const data = parseStockData(input);
-  data.sort((a, b) => {
+  data.sort((a: { timestamp: number }, b: { timestamp: number }) => {
     if (a.timestamp < b.timestamp) {
       return -1;
     }
@@ -170,7 +169,7 @@ const Chart = ({
       candleSeries.applyOptions({
         priceFormat: {
           type: 'custom',
-          formatter: (price) => {
+          formatter: (price: number) => {
             return price.toFixed(precision);
           },
         },
@@ -193,14 +192,15 @@ const Chart = ({
 
       // Convert the data to the format required by Lightweight Charts
       const candlestickData = data.map((item) => ({
-        time: item.timestamp, // assuming the timestamp is in milliseconds
-        open: item.open,
-        high: item.high,
-        low: item.low,
-        close: item.close,
-      }));
+          time: item.timestamp, // assuming the timestamp is in milliseconds
+          open: item.open,
+          high: item.high,
+          low: item.low,
+          close: item.close,
+        })
+      );
 
-      const volumeData = data.map((item) => ({
+      const volumeData = data.map((item: { timestamp: any; volume: any }) => ({
         time: item.timestamp, // assuming the timestamp is in milliseconds
         value: item.volume,
       }));
@@ -233,12 +233,12 @@ const Chart = ({
   const badge = rateBadge(analysis);
   return (
     <div
-      className="border border-black p-1 bg-black box-border"
-      style={{ width: '260px' }}
+      className="border border-black p-1 bg-black box-border w-63"
+      style={{ borderRadius: '0.5rem'  }}
     >
-      <div className="flex justify-start items-center mb-2">
-        <div className="text-white font-bold text-sm mr-1">{stockName}</div>
-        <div className="flex items-center">
+      <div className="flex justify-start items-center mb-1 mt-2">
+        <div className="text-white font-bold text-sm mr-2 ml-2">{stockName}</div>
+        <div className="flex items-center mr-2">
           {badge}
           {analysis.foreign > 0 && (
             <div className="badge badge-sm badge-neutral text-white">外資</div>
@@ -248,7 +248,7 @@ const Chart = ({
           )}
         </div>
       </div>
-      <div className="flex justify-between text-xs">
+      <div className="flex justify-between text-xs mr-2 ml-2 mb-1">
         <div className="flex-1 text-left" style={{ color: priceColor }}>
           {close}
         </div>
@@ -264,24 +264,5 @@ const Chart = ({
   );
 };
 
-Chart.propTypes = {
-  input: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      open: PropTypes.number.isRequired,
-      high: PropTypes.number.isRequired,
-      low: PropTypes.number.isRequired,
-      close: PropTypes.number.isRequired,
-      tradeShares: PropTypes.string.isRequired,
-      turnover: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  id: PropTypes.string.isRequired,
-  stockName: PropTypes.string.isRequired,
-  close: PropTypes.number.isRequired,
-  diff: PropTypes.number.isRequired,
-  diffPercent: PropTypes.string.isRequired,
-  analysis: PropTypes.object.isRequired,
-};
 
 export default Chart;

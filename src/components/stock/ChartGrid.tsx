@@ -26,19 +26,14 @@ const ChartGrid = () => {
   }
 
   if (fetchError) {
-    return (
-
-      <Alert message={fetchError.data.message} />
-    );
+    return <Alert message={fetchError.data.message} />;
   }
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="grid grid-cols-1 gap-1 justify-center items-center sm:grid-cols-2 sm:max-w-[524px] md:grid-cols-3 md:max-w-[788px]">
+    <div className="flex flex-wrap gap-1 justify-center items-center mt-4 mb-4 ml-4 mr-4">
         {dailyCloses.map((stock) => (
           <Chart key={stock.stockID} {...stock} />
         ))}
-      </div>
     </div>
   );
 };
