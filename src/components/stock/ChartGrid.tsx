@@ -31,9 +31,9 @@ const ChartGrid = () => {
 
   return (
     <div className="flex flex-wrap gap-1 justify-center items-center mt-4 mb-4 ml-4 mr-4">
-        {dailyCloses.map((stock) => (
-          <Chart key={stock.stockID} {...stock} />
-        ))}
+      {dailyCloses.map((stock) => (
+        <Chart key={stock.stockID} {...stock} />
+      ))}
     </div>
   );
 };

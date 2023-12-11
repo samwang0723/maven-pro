@@ -4,15 +4,17 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    require('tailwindcss-opentype'),
+  ],
   daisyui: {
     themes: [
-      // 'cupcake',
       'dark',
       {
         cupcake: {
           ...require('daisyui/src/theming/themes')['cupcake'],
-          'base-100': '#ffffff',
+          'base-100': '#f0f0f0',
         },
       },
     ],

@@ -2,7 +2,7 @@ import ThemeSwitcher from '../style/ThemeSwitcher';
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 fixed top-0 bg-opacity-75 backdrop-filter backdrop-blur-md shadow-sm">
       <div className="navbar-start">
         <div className="flex-none lg:hidden">
           <label

@@ -233,8 +233,8 @@ const Chart = ({
   const badge = rateBadge(analysis);
   return (
     <div
-      className="border border-black p-1 bg-black box-border w-63"
-      style={{ borderRadius: '0.5rem'  }}
+      className="border border-black p-1 bg-black box-border"
+      style={{ borderRadius: '0.5rem', width: '260px' }}
     >
       <div className="flex justify-start items-center mb-1 mt-2">
         <div className="text-white font-bold text-sm mr-2 ml-2">{stockName}</div>

@@ -22,8 +22,8 @@ const Alert = ({ message }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="alert alert-error shadow-lg text-sm">
+    <div className="container mx-auto mt-10 space-y-5 justify-center">
+      <div className="alert alert-error shadow-lg text-sm text-white">
         <div>
           <span>{message}</span>
         </div>

@@ -14,7 +14,7 @@ const DrawerLayout: React.FC<DrawerLayoutProps> = ({ children }) => {
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center min-h-screen">
         <Navbar />
-        <main className="mb-auto">
+        <main className="mb-auto mt-16">
           {children}
         </main>
         <Footer />
