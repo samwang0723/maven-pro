@@ -4,11 +4,12 @@ import { createChart } from 'lightweight-charts';
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
-const CHART_HEIGHT = 200;
+const CHART_WIDTH = 186;
+const CHART_HEIGHT = 140;
 
 function rateBadge(analysis) {
   var result = (
-    <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
+    <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
       -
     </span>
   );
@@ -21,13 +22,13 @@ function rateBadge(analysis) {
 
   if (count === 5) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-teal-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-teal-500 text-white">
         五燈
       </span>
     );
   } else if (count === 4) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-full text-xs font-small bg-yellow-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-yellow-500 text-white">
         四星
       </span>
     );
@@ -40,7 +41,7 @@ function rateBadge(analysis) {
 
   if (count === 9) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-red-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-red-500 text-white">
         滿貫
       </span>
     );
@@ -129,7 +130,7 @@ const Chart = ({
         handleScroll: false,
         handleScale: false,
         layout: {
-          fontSize: 11,
+          fontSize: 9,
           textColor: 'white',
           background: { color: 'black' },
         },
@@ -225,8 +226,8 @@ const Chart = ({
 
       // This is a workaround to avoid canvas z-index break other div
       var screenshot = chart.takeScreenshot();
-      screenshot.style.width = '250px';
-      screenshot.style.height = '200px';
+      screenshot.style.width = CHART_WIDTH + 'px';
+      screenshot.style.height = CHART_HEIGHT + 'px';
 
       while (chartContainerRef.current.firstChild) {
         chartContainerRef.current.removeChild(
@@ -247,29 +248,19 @@ const Chart = ({
   return (
     <div
       className="border border-black p-1 bg-black box-border"
-      style={{ borderRadius: '0.5rem', width: '260px' }}
+      style={{ borderRadius: '0.5rem', width: '196px' }}
     >
-      <div className="flex justify-start items-center mb-1 mt-2">
+      <div className="flex justify-between items-center mb-1 mt-2">
         <div className="text-white font-bold text-sm mr-2 ml-2">
           {stockName}
         </div>
         <div className="flex items-center mr-2">
           {badge}
-          {analysis.foreign > 0 && (
-            <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
-              外資
-            </span>
-          )}
-          {analysis.trust > 0 && (
-            <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
-              投信
-            </span>
-          )}
         </div>
       </div>
       <div className="flex justify-between text-xs mr-2 ml-2 mb-1">
         <div
-          className="flex-1 text-left text-[color]"
+          className="flex-1 text-left text-xs text-sm text-[color]"
           style={{ color: priceColor }}
         >
           {' '}
@@ -277,7 +268,7 @@ const Chart = ({
           {close}
         </div>
         <div
-          className="flex-1 text-left text-[color]"
+          className="flex-1 text-left text-xs text-sm text-[color]"
           style={{ color: priceColor }}
         >
           {' '}
@@ -285,7 +276,7 @@ const Chart = ({
           {diff}
         </div>
         <div
-          className="flex-1 text-right text-[color]"
+          className="flex-1 text-right text-xs text-sm text-[color]"
           style={{ color: priceColor }}
         >
           {' '}

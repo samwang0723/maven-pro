@@ -44,7 +44,7 @@ export const usePickedStocks = (startDate: string) => {
           const dailyClose = await dailyCloseApi({
             v1ListDailyCloseRequest: {
               offset: 0,
-              limit: 60,
+              limit: 25,
               searchParams: {
                 stockID: stock.stockID,
                 start: startDate,
