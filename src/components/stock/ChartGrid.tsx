@@ -28,7 +28,7 @@ const ChartGrid = () => {
   if (fetchError) {
     return (
       <div className="flex mt-4">
-        <Alert color="red" show={true} onDismiss={() => {}}>
+        <Alert show={true} onDismiss={() => {}}>
           <span className="font-semibold">Error:</span> {fetchError.data.message}
         </Alert>
       </div>

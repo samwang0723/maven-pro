@@ -63,7 +63,7 @@ const Login = () => {
 
   return (
     <main className="w-full max-w-md mx-auto p-6">
-      <Alert className="" color="red" show={showAlert} onDismiss={handleDismiss}>
+      <Alert show={showAlert} onDismiss={handleDismiss}>
         <span className="font-semibold">Error:</span> {loginError} 
       </Alert>
 
