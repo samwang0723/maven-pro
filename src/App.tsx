@@ -12,13 +12,13 @@ import Signup from './components/auth/Signup';
 import Forgotpassword from './components/auth/Forgotpassword';
 
 // Create a context for theme management
-export const ThemeContext = createContext({
+const ThemeContext = createContext({
   theme: 'default',
   setTheme: (theme) => {},
 });
 
 // Custom hook to use the theme context
-const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => useContext(ThemeContext);
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -60,12 +60,12 @@ const App: React.FC = () => {
       new CustomEvent('on-hs-appearance-change', { detail: theme })
     );
 
-    // Clean up styles after theme is set
-    const resetStyles = document.createElement('style');
-    resetStyles.innerText = `*{transition: unset !important;}`;
-    document.head.appendChild(resetStyles);
+    // // Clean up styles after theme is set
+    // const resetStyles = document.createElement('style');
+    // resetStyles.innerText = `*{transition: unset !important;}`;
+    // document.head.appendChild(resetStyles);
     return () => {
-      resetStyles.remove();
+      // resetStyles.remove();
     };
   }, [theme]);
 

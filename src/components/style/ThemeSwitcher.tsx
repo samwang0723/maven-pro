@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
-
-// Import the ThemeContext
-import { ThemeContext } from '../../App'; // Update the path accordingly
+import { useTheme } from '../../App';
 
 const ThemeSwitcher = () => {
   // Use the ThemeContext to access the theme and setTheme function
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
 
   // Function to toggle the theme
   const toggleTheme = () => {

@@ -4,12 +4,85 @@ import { createChart } from 'lightweight-charts';
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
-const CHART_WIDTH = 186;
-const CHART_HEIGHT = 140;
+const CHART_WIDTH = 250;
+const CHART_HEIGHT = 180;
+
+function priceIndicator(close: number, diff: number, diffPercent: string) {
+  let text = close + ' , ' + diff + ' , ' + diffPercent;
+  if (diff > 0) {
+    text = close + ' , +' + diff + ' , +' + diffPercent;
+    return (
+      <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-bold bg-red-100 text-red-800 rounded-full dark:bg-red-500/10 dark:text-red-500">
+        <svg
+          className="flex-shrink-0 w-3 h-3"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+          <polyline points="16 7 22 7 22 13" />
+        </svg>
+
+        {text}
+      </span>
+    );
+  } else if (diff < 0) {
+    return (
+      <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-bold bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+        <svg
+          className="flex-shrink-0 w-3 h-3"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
+          <polyline points="16 17 22 17 22 11" />
+        </svg>
+
+        {text}
+      </span>
+    );
+  }
+
+  return (
+    <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-bold bg-gray-100 text-gray-800 rounded-md dark:bg-slate-500/20 dark:text-slate-400">
+      {text}
+    </span>
+  );
+}
+
+function concentrationBadge(analysis) {
+  let text = '-';
+
+  if (analysis.foreign > 0 && analysis.trust > 0) {
+    text = '土洋';
+  } else if (analysis.foreign > 0) {
+    text = '外資';
+  } else if (analysis.trust > 0) {
+    text = '投信';
+  }
+  return (
+    <span className="inline-flex items-center gap-x-1 py-1 px-2 ml-1 rounded-md text-xs text-sm font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+      {text}
+    </span>
+  );
+}
 
 function rateBadge(analysis) {
   var result = (
-    <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
+    <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
       -
     </span>
   );
@@ -22,13 +95,13 @@ function rateBadge(analysis) {
 
   if (count === 5) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-teal-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-teal-500 text-white">
         五燈
       </span>
     );
   } else if (count === 4) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-yellow-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-yellow-500 text-dark">
         四星
       </span>
     );
@@ -41,7 +114,7 @@ function rateBadge(analysis) {
 
   if (count === 9) {
     result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-small bg-red-500 text-white">
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-red-500 text-white">
         滿貫
       </span>
     );
@@ -130,7 +203,7 @@ const Chart = ({
         handleScroll: false,
         handleScale: false,
         layout: {
-          fontSize: 9,
+          fontSize: 11,
           textColor: 'white',
           background: { color: 'black' },
         },
@@ -243,46 +316,23 @@ const Chart = ({
   }, [id, data]);
 
   // price color if diff contains +,use red,otherwise use green
-  const priceColor = diff > 0 ? red : green;
+
   const badge = rateBadge(analysis);
+  const cBadge = concentrationBadge(analysis);
   return (
     <div
       className="border border-black p-1 bg-black box-border"
-      style={{ borderRadius: '0.5rem', width: '196px' }}
+      style={{ borderRadius: '0.5rem', width: '260px' }}
     >
       <div className="flex justify-between items-center mb-1 mt-2">
-        <div className="text-white font-bold text-sm mr-2 ml-2">
-          {stockName}
-        </div>
+        <div className="text-white font-bold mr-2 ml-2">{stockName}</div>
         <div className="flex items-center mr-2">
           {badge}
+          {cBadge}
         </div>
       </div>
       <div className="flex justify-between text-xs mr-2 ml-2 mb-1">
-        <div
-          className="flex-1 text-left text-xs text-sm text-[color]"
-          style={{ color: priceColor }}
-        >
-          {' '}
-          {/* Replace [color] with the actual color value if known */}
-          {close}
-        </div>
-        <div
-          className="flex-1 text-left text-xs text-sm text-[color]"
-          style={{ color: priceColor }}
-        >
-          {' '}
-          {/* Replace [color] with the actual color value if known */}
-          {diff}
-        </div>
-        <div
-          className="flex-1 text-right text-xs text-sm text-[color]"
-          style={{ color: priceColor }}
-        >
-          {' '}
-          {/* Replace [color] with the actual color value if known */}
-          {diffPercent}
-        </div>
+        {priceIndicator(close, diff, diffPercent)}
       </div>
       <div ref={chartContainerRef} id={id} />
     </div>
