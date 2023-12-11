@@ -19,21 +19,29 @@ const ChartGrid = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex min-h-screen">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
 
   if (fetchError) {
-    return <Alert message={fetchError.data.message} />;
+    return (
+      <div className="flex mt-4">
+        <Alert color="red" show={true} onDismiss={() => {}}>
+          <span className="font-semibold">Error:</span> {fetchError.data.message}
+        </Alert>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-wrap gap-1 justify-center items-center mt-4 mb-4 ml-4 mr-4">
-      {dailyCloses.map((stock) => (
-        <Chart key={stock.stockID} {...stock} />
-      ))}
+    <div className="flex flex-wrap gap-1 items-center mt-4 mb-4">
+      {dailyCloses && dailyCloses.length > 0 ? (
+        dailyCloses.map((stock) => <Chart key={stock.id} {...stock} />)
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

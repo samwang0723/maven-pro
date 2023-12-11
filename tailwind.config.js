@@ -1,22 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './node_modules/preline/preline.js'],
   theme: {
     extend: {},
   },
   plugins: [
-    require('daisyui'),
     require('tailwindcss-opentype'),
+    require('preline/plugin'),
+    require('@tailwindcss/forms'),
   ],
-  daisyui: {
-    themes: [
-      'dark',
-      {
-        cupcake: {
-          ...require('daisyui/src/theming/themes')['cupcake'],
-          'base-100': '#f0f0f0',
-        },
-      },
-    ],
-  },
+  darkMode: 'class',
 };

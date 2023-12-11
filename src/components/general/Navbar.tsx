@@ -1,55 +1,31 @@
-import ThemeSwitcher from '../style/ThemeSwitcher';
+import Breadcrumb from './Breadcrumb';
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 fixed top-0 bg-opacity-75 backdrop-filter backdrop-blur-md shadow-sm">
-      <div className="navbar-start">
-        <div className="flex-none lg:hidden">
-          <label
-            htmlFor="my-drawer-2"
-            aria-label="open sidebar"
-            className="btn btn-circle btn-ghost"
+    <div className="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700">
+      <div className="flex items-center py-4">
+        <button
+          type="button"
+          className="text-gray-500 hover:text-gray-600"
+          data-hs-overlay="#application-sidebar"
+          aria-controls="application-sidebar"
+          aria-label="Toggle navigation"
+        >
+          <span className="sr-only">Toggle Navigation</span>
+          <svg
+            className="w-5 h-5"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block w-6 h-6 stroke-current"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </label>
-        </div>
-      </div>
-      <div className="navbar-center">
-        <a className="btn btn-ghost text-xl" href="/">Jarvis Stock Expert</a>
-      </div>
-      <div className="navbar-end">
-        <ThemeSwitcher />
-        <button className="btn btn-ghost btn-circle">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
+            <path
+              fillRule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+            />
+          </svg>
         </button>
+        <Breadcrumb />
       </div>
     </div>
   );

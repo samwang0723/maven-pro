@@ -1,37 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const Alert = ({ message }) => {
-  // State to manage the visibility of the alert
-  const [visible, setVisible] = useState(true);
-
-  // Set the time (in milliseconds) for the alert to auto-dismiss
-  const dismissTime = 5000; // 5 seconds
+const Alert = ({ children, className = '', color, show, onDismiss }) => {
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false); // Hide the alert after the dismissTime
-    }, dismissTime);
+    let timer;
+    if (show) {
+      // Set a timer to auto-dismiss the alert after 5 seconds
+      timer = setTimeout(() => {
+        if (onDismiss) onDismiss(); // Call the onDismiss callback if provided
+      }, 5000);
+    }
 
-    // Cleanup the timer when the component is unmounted or the timer is reset
-    return () => clearTimeout(timer);
-  }, [dismissTime]);
+    // Clear the timer if the component is unmounted or the alert is manually dismissed before 5 seconds
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [show, onDismiss]);
 
-  // If the alert is not visible, don't render anything
-  if (!visible) {
-    return null;
-  }
+  if (!show) return null;
 
   return (
-    <div className="container mx-auto mt-10 space-y-5 justify-center">
-      <div className="alert alert-error shadow-lg text-sm text-white">
-        <div>
-          <span>{message}</span>
-        </div>
-      </div>
+    <div
+      className={`bg-${color}-100 border border-${color}-200 text-sm text-${color}-800 rounded-lg p-4 dark:bg-${color}-800/10 dark:border-${color}-900 dark:text-${color}-500 ${className}`}
+      role="alert"
+    >
+      {children}
     </div>
   );
 };
 
 export default Alert;
-
-

@@ -7,7 +7,11 @@ const gridColor = '#1E1E1E';
 const CHART_HEIGHT = 200;
 
 function rateBadge(analysis) {
-  var result = <div className="badge badge-sm badge-ghost"> - </div>;
+  var result = (
+    <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
+      -
+    </span>
+  );
   var count = 0;
   count += analysis.concentration1 > 0 ? 1 : 0;
   count += analysis.concentration5 > 0 ? 1 : 0;
@@ -17,10 +21,16 @@ function rateBadge(analysis) {
 
   if (count === 5) {
     result = (
-      <div className="badge badge-sm badge-success text-white">五燈</div>
+      <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-teal-500 text-white">
+        五燈
+      </span>
     );
   } else if (count === 4) {
-    result = <div className="badge badge-sm badge-warning">四星</div>;
+    result = (
+      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-full text-xs font-small bg-yellow-500 text-white">
+        四星
+      </span>
+    );
   }
 
   count += analysis.foreign > 0 ? 1 : 0;
@@ -29,7 +39,11 @@ function rateBadge(analysis) {
   count += analysis.trust10 > 0 ? 1 : 0;
 
   if (count === 9) {
-    result = <div className="badge badge-sm badge-error text-white">滿貫</div>;
+    result = (
+      <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-red-500 text-white">
+        滿貫
+      </span>
+    );
   }
 
   return result;
@@ -192,13 +206,12 @@ const Chart = ({
 
       // Convert the data to the format required by Lightweight Charts
       const candlestickData = data.map((item) => ({
-          time: item.timestamp, // assuming the timestamp is in milliseconds
-          open: item.open,
-          high: item.high,
-          low: item.low,
-          close: item.close,
-        })
-      );
+        time: item.timestamp, // assuming the timestamp is in milliseconds
+        open: item.open,
+        high: item.high,
+        low: item.low,
+        close: item.close,
+      }));
 
       const volumeData = data.map((item: { timestamp: any; volume: any }) => ({
         time: item.timestamp, // assuming the timestamp is in milliseconds
@@ -237,25 +250,46 @@ const Chart = ({
       style={{ borderRadius: '0.5rem', width: '260px' }}
     >
       <div className="flex justify-start items-center mb-1 mt-2">
-        <div className="text-white font-bold text-sm mr-2 ml-2">{stockName}</div>
+        <div className="text-white font-bold text-sm mr-2 ml-2">
+          {stockName}
+        </div>
         <div className="flex items-center mr-2">
           {badge}
           {analysis.foreign > 0 && (
-            <div className="badge badge-sm badge-neutral text-white">外資</div>
+            <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+              外資
+            </span>
           )}
           {analysis.trust > 0 && (
-            <div className="badge badge-sm badge-neutral text-white">投信</div>
+            <span className="inline-flex items-center gap-x-1 py-1 px-2  rounded-full text-xs font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+              投信
+            </span>
           )}
         </div>
       </div>
       <div className="flex justify-between text-xs mr-2 ml-2 mb-1">
-        <div className="flex-1 text-left" style={{ color: priceColor }}>
+        <div
+          className="flex-1 text-left text-[color]"
+          style={{ color: priceColor }}
+        >
+          {' '}
+          {/* Replace [color] with the actual color value if known */}
           {close}
         </div>
-        <div className="flex-1 text-left" style={{ color: priceColor }}>
+        <div
+          className="flex-1 text-left text-[color]"
+          style={{ color: priceColor }}
+        >
+          {' '}
+          {/* Replace [color] with the actual color value if known */}
           {diff}
         </div>
-        <div className="flex-1 text-right" style={{ color: priceColor }}>
+        <div
+          className="flex-1 text-right text-[color]"
+          style={{ color: priceColor }}
+        >
+          {' '}
+          {/* Replace [color] with the actual color value if known */}
           {diffPercent}
         </div>
       </div>
@@ -263,6 +297,5 @@ const Chart = ({
     </div>
   );
 };
-
 
 export default Chart;
