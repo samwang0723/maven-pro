@@ -12,7 +12,7 @@ const Signup = () => {
               <span className="ml-2">
                 <a
                   className="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                  href="/"
+                  href="/login"
                 >
                   Sign in here
                 </a>

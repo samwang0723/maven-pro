@@ -22,6 +22,7 @@
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
     "redux": "^5.0.0",
+    "tailwind-datepicker-react": "^1.4.3",
     "tailwindcss-opentype": "^1.1.0",
     "typescript": "^4.9.5"
   },

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import ThemeSwitcher from '../style/ThemeSwitcher';
+import { HSOverlay } from 'preline';
+
+const dismissOverlay = () => {
+  const doc = document.getElementById('application-sidebar');
+  HSOverlay.close(doc);
+}
 
 const Sidebar = () => {
   return (
@@ -27,7 +33,7 @@ const Sidebar = () => {
         data-hs-accordion-always-open
       >
         <ul className="space-y-1.5">
-          <li>
+          <li onClick={dismissOverlay}>
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -110,7 +116,7 @@ const Sidebar = () => {
               className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
             >
               <ul className="pt-2 ps-2">
-                <li>
+                <li onClick={dismissOverlay}>
                   <NavLink
                     to="/analysis"
                     className={({ isActive }) =>
@@ -122,7 +128,7 @@ const Sidebar = () => {
                     Analysis
                   </NavLink>
                 </li>
-                <li>
+                <li onClick={dismissOverlay}>
                   <NavLink
                     to="/watchlist"
                     className={({ isActive }) =>
@@ -203,7 +209,7 @@ const Sidebar = () => {
               className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
             >
               <ul className="pt-2 ps-2">
-                <li>
+                <li onClick={dismissOverlay}>
                   <Link
                     className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
                     to="#"
@@ -211,19 +217,19 @@ const Sidebar = () => {
                     Profile
                   </Link>
                 </li>
-                <li>
-                  <Link
+                <li onClick={dismissOverlay}>
+                  <a
                     className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
-                    to="/login"
+                    href="/login"
                   >
                     Logout
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
           </li>
 
-          <li>
+          <li onClick={dismissOverlay}>
             <Link
               className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
               to="#"
@@ -254,7 +260,7 @@ const Sidebar = () => {
               Calendar
             </Link>
           </li>
-          <li>
+          <li onClick={dismissOverlay}>
             <Link
               className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
               to="#"
@@ -283,4 +289,4 @@ const Sidebar = () => {
   );
 };
 
-export default React.memo(Sidebar);
+export default Sidebar;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { jarvisApi } from '../apis/jarvisApi';
 import { constructPayload } from './payload';
 
-export const useDailyAnalysis = (qDate: string, startDate: string) => {
+export const useDailyAnalysis = (qDate: string, startDate: string, endDate: string) => {
   const [dailyCloses, setDailyCloses] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,6 +12,8 @@ export const useDailyAnalysis = (qDate: string, startDate: string) => {
 
   useEffect(() => {
     setLoading(true);
+    setFetchError(null);
+    setDailyCloses([]);
     const fetchSelections = async () => {
       try {
         const data = await selectionApi({
@@ -23,7 +25,7 @@ export const useDailyAnalysis = (qDate: string, startDate: string) => {
 
         if (!data.entries || data.entries.length === 0) {
           setLoading(false);
-          setFetchError({ data: { message: 'No data found' } });
+          setFetchError({ data: { message: 'No analysis data found, please select other date.' } });
           return;
         }
         fetchStocksWithHistory(data);
@@ -42,6 +44,7 @@ export const useDailyAnalysis = (qDate: string, startDate: string) => {
               searchParams: {
                 stockID: stock.stockID,
                 start: startDate,
+                end: endDate,
               },
             },
           }).unwrap();

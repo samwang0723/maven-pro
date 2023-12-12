@@ -1,23 +1,48 @@
 import ChartGrid from '../stock/ChartGrid';
 import Alert from '../general/Alert';
 import { useDailyAnalysis } from '../../features/aggregators/dailyAnalysis';
+import Calendar from '../stock/Calendar';
+import { useState } from 'react';
 
-function getDateTwoMonthsAgo() {
-  const currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth() - 2);
+function getDateTwoMonthsAgo(date) {
+  const d = new Date(date);
+  d.setMonth(d.getMonth() - 2);
 
-  const year = currentDate.getFullYear();
-  const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-  const day = ('0' + currentDate.getDate()).slice(-2);
-
-  return `${year}${month}${day}`;
+  return formatDate(d);
 }
 
+function addOneDay(date) {
+  const d = new Date(date); // Create a new Date object to avoid mutating the original date
+  d.setDate(d.getDate() + 1); // Add one day
+
+  return formatDate(d);
+}
+
+const formatDate = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = `0${d.getMonth() + 1}`.slice(-2); // Months are 0-indexed, add 1
+  const day = `0${d.getDate()}`.slice(-2);
+  return `${year}${month}${day}`;
+};
+
 const DailyAnalysis = () => {
-  const startDate = getDateTwoMonthsAgo(); // Set the start date for the history search
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState(formatDate(today));
+  const [startDate, setStartDate] = useState(getDateTwoMonthsAgo(today));
+  const [endDate, setEndDate] = useState(addOneDay(today));
+
+  const handleDateChange = (date) => {
+    const formattedDate = formatDate(date);
+    setSelectedDate(formattedDate);
+    setStartDate(getDateTwoMonthsAgo(date));
+    setEndDate(addOneDay(date));
+  };
+
   const { dailyCloses, loading, fetchError } = useDailyAnalysis(
-    '20231211',
-    startDate
+    selectedDate,
+    startDate,
+    endDate
   );
 
   return (
@@ -32,6 +57,7 @@ const DailyAnalysis = () => {
         concentration, pressure, whether it is already break through the
         pressure point or ready to break through.
       </p>
+      <Calendar onDateChange={handleDateChange} />
       {loading && (
         <button
           type="button"

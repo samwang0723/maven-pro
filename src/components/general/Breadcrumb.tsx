@@ -1,11 +1,32 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const routeMap = {
+  '/watchlist': { parent: 'Selection', page: 'Watchlist' },
+  '/analysis': { parent: 'Selection', page: 'Analysis' },
+  '/dashboard': { parent: 'Home', page: 'Dashboard' },
+  '/': { parent: 'Home', page: 'Dashboard' },
+};
+
 const Breadcrumb = () => {
+  const location = useLocation();
+  const [parent, setParent] = useState('');
+  const [page, setPage] = useState('');
+
+  useEffect(() => {
+    console.log(location.pathname);
+    const { parent, page } = routeMap[location.pathname];
+    setParent(parent);
+    setPage(page);
+  }, [location]);
+
   return (
     <ol
       className="ms-3 flex items-center whitespace-nowrap"
       aria-label="Breadcrumb"
     >
       <li className="flex items-center text-sm text-gray-800 dark:text-gray-400">
-        Application Layout
+        {parent}
         <svg
           className="flex-shrink-0 mx-3 overflow-visible h-2.5 w-2.5 text-gray-400 dark:text-gray-600"
           width="16"
@@ -26,7 +47,7 @@ const Breadcrumb = () => {
         className="text-sm font-semibold text-gray-800 truncate dark:text-gray-400"
         aria-current="page"
       >
-        Dashboard
+        {page}
       </li>
     </ol>
   );
