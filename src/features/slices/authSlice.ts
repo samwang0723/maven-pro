@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import Cookies from 'js-cookie';
 
 interface AuthState {
   token: string | null;
@@ -15,6 +16,7 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
+      Cookies.set('token', state.token, { expires: 5 });
     },
   },
 });

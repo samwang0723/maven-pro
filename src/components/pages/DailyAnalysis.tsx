@@ -1,6 +1,6 @@
 import ChartGrid from '../stock/ChartGrid';
-import { usePickedStocks } from '../../features/aggregators/pickedStocks';
 import Alert from '../general/Alert';
+import { useDailyAnalysis } from '../../features/aggregators/dailyAnalysis';
 
 function getDateTwoMonthsAgo() {
   const currentDate = new Date();
@@ -13,19 +13,24 @@ function getDateTwoMonthsAgo() {
   return `${year}${month}${day}`;
 }
 
-const SelfPicked = () => {
+const DailyAnalysis = () => {
   const startDate = getDateTwoMonthsAgo(); // Set the start date for the history search
-  const { dailyCloses, loading, fetchError } = usePickedStocks(startDate);
+  const { dailyCloses, loading, fetchError } = useDailyAnalysis(
+    '20231211',
+    startDate
+  );
 
   return (
     <header>
       <p className="mb-2 text-sm font-semibold text-blue-600">Selections</p>
       <h1 className="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">
-        Self Picked: Based on daily selection to subscribe
+        Analysis: Picked the highest possibility from concentration, scale and
+        pressure for you to Win
       </h1>
       <p className="mt-2 text-lg text-gray-800 dark:text-gray-400">
-        Suggest to pick from daily selection and put into watch list, if price
-        fall through the lowest price 2 days ago, remove it.
+        Analysis from selected date's stock performance, including the
+        concentration, pressure, whether it is already break through the
+        pressure point or ready to break through.
       </p>
       {loading && (
         <button
@@ -75,4 +80,4 @@ const SelfPicked = () => {
   );
 };
 
-export default SelfPicked;
+export default DailyAnalysis;

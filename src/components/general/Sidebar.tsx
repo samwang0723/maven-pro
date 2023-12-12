@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import ThemeSwitcher from '../style/ThemeSwitcher';
 
 const Sidebar = () => {
@@ -8,13 +10,13 @@ const Sidebar = () => {
     >
       <div className="flex justify-between items-center px-6">
         <div className="p-4">
-          <a
+          <Link
             className="flex-none text-xl font-semibold dark:text-white"
-            href="#"
+            to="/"
             aria-label="Maven"
           >
             Maven
-          </a>
+          </Link>
           <p className="text-base text-gray-600">Strategy matters</p>
         </div>
         <ThemeSwitcher />
@@ -26,9 +28,13 @@ const Sidebar = () => {
       >
         <ul className="space-y-1.5">
           <li>
-            <a
-              className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
+                  : 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-white dark:focus:outline-none'
+              }
             >
               <svg
                 className="flex-shrink-0 w-4 h-4"
@@ -46,12 +52,12 @@ const Sidebar = () => {
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
               Dashboard
-            </a>
+            </NavLink>
           </li>
           <li className="hs-accordion" id="projects-accordion">
             <button
               type="button"
-              className="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              className="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white dark:focus:outline-none "
             >
               <svg
                 className="flex-shrink-0 w-4 h-4"
@@ -105,20 +111,28 @@ const Sidebar = () => {
             >
               <ul className="pt-2 ps-2">
                 <li>
-                  <a
-                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#"
+                  <NavLink
+                    to="/analysis"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
+                        : 'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none'
+                    }
                   >
-                    Daily Selection
-                  </a>
+                    Analysis
+                  </NavLink>
                 </li>
                 <li>
-                  <a
-                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="/self-picked"
+                  <NavLink
+                    to="/watchlist"
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
+                        : 'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none'
+                    }
                   >
-                    Self Picked
-                  </a>
+                    Watchlist
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -127,7 +141,7 @@ const Sidebar = () => {
           <li className="hs-accordion" id="account-accordion">
             <button
               type="button"
-              className="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              className="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white dark:focus:outline-none "
             >
               <svg
                 className="flex-shrink-0 mt-0.5 w-4 h-4"
@@ -190,29 +204,29 @@ const Sidebar = () => {
             >
               <ul className="pt-2 ps-2">
                 <li>
-                  <a
-                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="#"
+                  <Link
+                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
+                    to="#"
                   >
                     Profile
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="/login"
+                  <Link
+                    className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
+                    to="/login"
                   >
                     Logout
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
           </li>
 
           <li>
-            <a
-              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
+            <Link
+              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
+              to="#"
             >
               <svg
                 className="flex-shrink-0 w-4 h-4"
@@ -238,12 +252,12 @@ const Sidebar = () => {
                 <path d="M16 18h.01" />
               </svg>
               Calendar
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-              href="#"
+            <Link
+              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
+              to="#"
             >
               <svg
                 className="flex-shrink-0 w-4 h-4"
@@ -261,7 +275,7 @@ const Sidebar = () => {
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
               </svg>
               Terms & Conditions
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
@@ -269,4 +283,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -54,7 +54,7 @@ const Login = () => {
         v1LoginRequest: { email, password },
       }).unwrap();
       dispatch(setToken(response?.accessToken || ''));
-      navigate('/self-picked');
+      navigate('/dashboard');
     } catch (err) {
       setLoginError('Invalid email or password.');
       handleShowAlert();

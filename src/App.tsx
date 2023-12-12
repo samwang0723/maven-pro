@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
 import Login from './components/auth/Login';
 import Navbar from './components/general/Navbar';
@@ -10,6 +10,8 @@ import Header from './components/general/Header';
 import SelfPicked from './components/pages/SelfPicked';
 import Signup from './components/auth/Signup';
 import Forgotpassword from './components/auth/Forgotpassword';
+import DailyAnalysis from './components/pages/DailyAnalysis';
+import Dashboard from './components/pages/Dashboard';
 
 // Create a context for theme management
 const ThemeContext = createContext({
@@ -113,27 +115,23 @@ const App: React.FC = () => {
           />
 
           <Route
-            path="*"
+            path="/"
             element={
               <>
                 <Header />
                 <Navbar />
                 <Sidebar />
                 <div className="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
-                  <Routes>
-                    <Route path="/self-picked" element={<SelfPicked />} />
-                    {/* Navigate to login page if no other route matches */}
-                    <Route
-                      path="*"
-                      element={<Navigate to="/login" replace />}
-                    />
-                    {/* Add other routes here */}
-                  </Routes>
+                  <Outlet />
                   <Footer />
                 </div>
               </>
             }
-          />
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/watchlist" element={<SelfPicked />} />
+            <Route path="/analysis" element={<DailyAnalysis />} />
+          </Route>
         </Routes>
       </div>
     </ThemeContext.Provider>

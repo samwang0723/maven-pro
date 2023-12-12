@@ -2,22 +2,37 @@ import { useEffect, useState } from 'react';
 import { jarvisApi } from '../apis/jarvisApi';
 import { constructPayload } from './payload';
 
-export const usePickedStocks = (startDate: string) => {
+export const useDailyAnalysis = (qDate: string, startDate: string) => {
   const [dailyCloses, setDailyCloses] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { data, error } = jarvisApi.useJarvisV1ListPickedStocksQuery();
+  const [selectionApi] = jarvisApi.useJarvisV1ListSelectionsMutation();
   const [dailyCloseApi] = jarvisApi.useJarvisV1ListDailyCloseMutation();
 
   useEffect(() => {
-    if (!data || error) {
-      setLoading(false);
-      setFetchError(error);
-      return;
-    }
+    setLoading(true);
+    const fetchSelections = async () => {
+      try {
+        const data = await selectionApi({
+          v1ListSelectionRequest: {
+            date: qDate,
+            strict: false,
+          },
+        }).unwrap();
 
-    const fetchStocksWithHistory = async () => {
+        if (!data.entries || data.entries.length === 0) {
+          setLoading(false);
+          setFetchError({ data: { message: 'No data found' } });
+          return;
+        }
+        fetchStocksWithHistory(data);
+      } catch (e) {
+        setFetchError(e.message);
+      }
+    };
+
+    const fetchStocksWithHistory = async (data) => {
       try {
         const stocksWithHistoryPromises = data.entries.map(async (stock) => {
           const dailyClose = await dailyCloseApi({
@@ -42,8 +57,8 @@ export const usePickedStocks = (startDate: string) => {
       }
     };
 
-    fetchStocksWithHistory();
-  }, [data, error, startDate, dailyCloseApi]);
+    fetchSelections();
+  }, [qDate, startDate, dailyCloseApi, selectionApi]);
 
   return { dailyCloses, loading, fetchError };
 };

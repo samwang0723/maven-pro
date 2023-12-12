@@ -4,7 +4,7 @@ import { createChart } from 'lightweight-charts';
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
-const CHART_WIDTH = 250;
+const CHART_WIDTH = 64 * 4 - 10;
 const CHART_HEIGHT = 180;
 
 function priceIndicator(close: number, diff: number, diffPercent: string) {
@@ -320,12 +320,9 @@ const Chart = ({
   const badge = rateBadge(analysis);
   const cBadge = concentrationBadge(analysis);
   return (
-    <div
-      className="border border-black p-1 bg-black box-border"
-      style={{ borderRadius: '0.5rem', width: '260px' }}
-    >
+    <div className="border border-black p-1 bg-black rounded-lg w-64">
       <div className="flex justify-between items-center mb-1 mt-2">
-        <div className="text-white font-bold mr-2 ml-2">{stockName}</div>
+        <div className="text-white font-bold text-sm text-md mr-2 ml-2">{stockName}</div>
         <div className="flex items-center mr-2">
           {badge}
           {cBadge}
