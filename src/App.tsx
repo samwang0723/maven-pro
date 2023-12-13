@@ -12,6 +12,10 @@ import Signup from './components/auth/Signup';
 import Forgotpassword from './components/auth/Forgotpassword';
 import DailyAnalysis from './components/pages/DailyAnalysis';
 import Dashboard from './components/pages/Dashboard';
+import { selectAuth, setToken } from './features/slices/authSlice';
+import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 
 // Create a context for theme management
 const ThemeContext = createContext({
@@ -21,6 +25,22 @@ const ThemeContext = createContext({
 
 // Custom hook to use the theme context
 export const useTheme = () => useContext(ThemeContext);
+
+function RequireAuth({ children }) {
+  const auth = useSelector(selectAuth);
+  let authed = false;
+  if (auth.token === null) {
+    const token = Cookies.get('token');
+    if (token) {
+      setToken(token);
+      authed = true;
+    }
+  } else {
+    authed = true;
+  }
+
+  return authed === true ? children : <Navigate to="/login" replace />;
+}
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -61,14 +81,6 @@ const App: React.FC = () => {
     window.dispatchEvent(
       new CustomEvent('on-hs-appearance-change', { detail: theme })
     );
-
-    // // Clean up styles after theme is set
-    // const resetStyles = document.createElement('style');
-    // resetStyles.innerText = `*{transition: unset !important;}`;
-    // document.head.appendChild(resetStyles);
-    return () => {
-      // resetStyles.remove();
-    };
   }, [theme]);
 
   // Listen for system theme changes
@@ -117,7 +129,7 @@ const App: React.FC = () => {
           <Route
             path="/"
             element={
-              <>
+              <RequireAuth>
                 <Header />
                 <Navbar />
                 <Sidebar />
@@ -125,7 +137,7 @@ const App: React.FC = () => {
                   <Outlet />
                   <Footer />
                 </div>
-              </>
+              </RequireAuth>
             }
           >
             <Route path="/dashboard" element={<Dashboard />} />

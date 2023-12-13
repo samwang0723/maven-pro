@@ -18,9 +18,13 @@ const authSlice = createSlice({
       state.token = action.payload;
       Cookies.set('token', state.token, { expires: 5 });
     },
+    deleteToken(state) {
+      state.token = null;
+      Cookies.remove('token');
+    },
   },
 });
 
-export const { setToken } = authSlice.actions;
+export const { setToken, deleteToken } = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 export default authSlice.reducer;

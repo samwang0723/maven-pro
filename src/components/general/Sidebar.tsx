@@ -2,13 +2,22 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import ThemeSwitcher from '../style/ThemeSwitcher';
 import { HSOverlay } from 'preline';
+import { AppDispatch } from '../../features/store';
+import { deleteToken } from '../../features/slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 const dismissOverlay = () => {
   const doc = document.getElementById('application-sidebar');
   HSOverlay.close(doc);
-}
+};
 
 const Sidebar = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const handleLogout = () => {
+    dismissOverlay();
+    dispatch(deleteToken());
+  };
+
   return (
     <div
       id="application-sidebar"
@@ -217,7 +226,7 @@ const Sidebar = () => {
                     Profile
                   </Link>
                 </li>
-                <li onClick={dismissOverlay}>
+                <li onClick={handleLogout}>
                   <a
                     className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
                     href="/login"
