@@ -3,28 +3,8 @@ import Alert from '../general/Alert';
 import { useDailyAnalysis } from '../../features/aggregators/dailyAnalysis';
 import Calendar from '../stock/Calendar';
 import { useState } from 'react';
+import { addOneDay, formatDate, getDateTwoMonthsAgo } from '../utils/date';
 
-function getDateTwoMonthsAgo(date) {
-  const d = new Date(date);
-  d.setMonth(d.getMonth() - 2);
-
-  return formatDate(d);
-}
-
-function addOneDay(date) {
-  const d = new Date(date); // Create a new Date object to avoid mutating the original date
-  d.setDate(d.getDate() + 1); // Add one day
-
-  return formatDate(d);
-}
-
-const formatDate = (date) => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = `0${d.getMonth() + 1}`.slice(-2); // Months are 0-indexed, add 1
-  const day = `0${d.getDate()}`.slice(-2);
-  return `${year}${month}${day}`;
-};
 
 const DailyAnalysis = () => {
   const today = new Date();

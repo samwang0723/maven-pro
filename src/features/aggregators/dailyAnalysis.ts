@@ -14,6 +14,7 @@ export const useDailyAnalysis = (qDate: string, startDate: string, endDate: stri
     setLoading(true);
     setFetchError(null);
     setDailyCloses([]);
+
     const fetchSelections = async () => {
       try {
         const data = await selectionApi({

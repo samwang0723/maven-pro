@@ -1,152 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { createChart } from 'lightweight-charts';
+import RateBadge from './RateBadge';
+import PriceBadge from './PriceBadge';
+import ConcentrationBadge from './ConcentrationBadge';
 
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
 const CHART_WIDTH = 64 * 4 - 10;
 const CHART_HEIGHT = 180;
-
-function priceIndicator(close: number, diff: number, diffPercent: string) {
-  if (diff > 0) {
-    return (
-      <>
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-red-100 text-red-800 rounded-md dark:bg-red-500/10 dark:text-red-500">
-          <svg
-            className="flex-shrink-0 w-3 h-3"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-            <polyline points="16 7 22 7 22 13" />
-          </svg>
-
-          {close}
-        </span>
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-red-100 text-red-800 rounded-md dark:bg-red-500/10 dark:text-red-500">
-          +{diff}
-        </span>
-
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-red-100 text-red-800 rounded-md dark:bg-red-500/10 dark:text-red-500">
-          +{diffPercent}
-        </span>
-      </>
-    );
-  } else if (diff < 0) {
-    return (
-      <>
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-teal-100 text-teal-800 rounded-md dark:bg-teal-500/10 dark:text-teal-500">
-          <svg
-            className="flex-shrink-0 w-3 h-3"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7" />
-            <polyline points="16 17 22 17 22 11" />
-          </svg>
-
-          {close}
-        </span>
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-teal-100 text-teal-800 rounded-md dark:bg-teal-500/10 dark:text-teal-500">
-          {diff}
-        </span>
-
-        <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-teal-100 text-teal-800 rounded-md dark:bg-teal-500/10 dark:text-teal-500">
-          {diffPercent}
-        </span>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-gray-100 text-gray-800 rounded-md dark:bg-slate-500/20 dark:text-slate-400">
-        {close}
-      </span>
-      <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-gray-100 text-gray-800 rounded-md dark:bg-slate-500/20 dark:text-slate-400">
-        {diff}
-      </span>
-
-      <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-gray-100 text-gray-800 rounded-md dark:bg-slate-500/20 dark:text-slate-400">
-        {diffPercent}
-      </span>
-    </>
-  );
-}
-
-function concentrationBadge(analysis) {
-  let text = '-';
-
-  if (analysis.foreign > 0 && analysis.trust > 0) {
-    text = '土洋';
-  } else if (analysis.foreign > 0) {
-    text = '外資';
-  } else if (analysis.trust > 0) {
-    text = '投信';
-  }
-  return (
-    <span className="inline-flex items-center gap-x-1 py-1 px-2 ml-1 rounded-md text-xs text-sm font-small bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
-      {text}
-    </span>
-  );
-}
-
-function rateBadge(analysis) {
-  var result = (
-    <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-gray-800 text-white dark:bg-white dark:text-gray-800">
-      -
-    </span>
-  );
-  var count = 0;
-  count += analysis.concentration1 > 0 ? 1 : 0;
-  count += analysis.concentration5 > 0 ? 1 : 0;
-  count += analysis.concentration10 > 0 ? 1 : 0;
-  count += analysis.concentration20 > 0 ? 1 : 0;
-  count += analysis.concentration60 > 0 ? 1 : 0;
-
-  if (count === 5) {
-    result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-teal-500 text-white">
-        五燈
-      </span>
-    );
-  } else if (count === 4) {
-    result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-yellow-500 text-dark">
-        四星
-      </span>
-    );
-  }
-
-  count += analysis.foreign > 0 ? 1 : 0;
-  count += analysis.trust > 0 ? 1 : 0;
-  count += analysis.foreign10 > 0 ? 1 : 0;
-  count += analysis.trust10 > 0 ? 1 : 0;
-
-  if (count === 9) {
-    result = (
-      <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-red-500 text-white">
-        滿貫
-      </span>
-    );
-  }
-
-  return result;
-}
 
 function parseStockData(stockData) {
   return stockData.map((item) => {
@@ -341,9 +203,6 @@ const Chart = ({
   }, [id, data]);
 
   // price color if diff contains +,use red,otherwise use green
-
-  const badge = rateBadge(analysis);
-  const cBadge = concentrationBadge(analysis);
   return (
     <div className="border border-black p-1 bg-black rounded-lg w-64">
       <div className="flex justify-between items-center mb-1 mt-2">
@@ -351,12 +210,12 @@ const Chart = ({
           {stockName}
         </div>
         <div className="flex items-center mr-2">
-          {badge}
-          {cBadge}
+          <RateBadge analysis={analysis} />
+          <ConcentrationBadge analysis={analysis} />
         </div>
       </div>
       <div className="flex justify-end gap-1 text-xs mr-2 ml-2 mb-1">
-        {priceIndicator(close, diff, diffPercent)}
+        <PriceBadge close={close} diff={diff} diffPercent={diffPercent} />
       </div>
       <div ref={chartContainerRef} id={id} />
     </div>
