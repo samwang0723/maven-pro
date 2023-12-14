@@ -14,7 +14,6 @@ const Breadcrumb = () => {
   const [page, setPage] = useState('');
 
   useEffect(() => {
-    console.log(location.pathname);
     const { parent, page } = routeMap[location.pathname];
     setParent(parent);
     setPage(page);

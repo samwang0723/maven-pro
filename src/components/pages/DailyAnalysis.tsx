@@ -56,7 +56,7 @@ const DailyAnalysis = () => {
         <div className="flex mt-4">
           <Alert show={true} onDismiss={() => {}}>
             <span className="font-semibold">Error:</span>{' '}
-            {fetchError.data.message}
+            {fetchError}
           </Alert>
         </div>
       )}

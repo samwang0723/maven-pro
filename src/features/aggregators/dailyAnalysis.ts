@@ -26,12 +26,12 @@ export const useDailyAnalysis = (qDate: string, startDate: string, endDate: stri
 
         if (!data.entries || data.entries.length === 0) {
           setLoading(false);
-          setFetchError({ data: { message: 'No analysis data found, please select other date.' } });
+          setFetchError('No analysis data found, please select other date.');
           return;
         }
         fetchStocksWithHistory(data);
       } catch (e) {
-        setFetchError(e.message);
+        setFetchError('Unable to fetch daily analysis data.');
       }
     };
 
@@ -55,7 +55,7 @@ export const useDailyAnalysis = (qDate: string, startDate: string, endDate: stri
         const results = await Promise.all(stocksWithHistoryPromises);
         setDailyCloses(results);
       } catch (e) {
-        setFetchError(e.message);
+        setFetchError('Unable to fetch daily analysis data.');
       } finally {
         setLoading(false);
       }
