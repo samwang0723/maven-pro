@@ -7,7 +7,7 @@ export const usePickedStocks = (startDate: string) => {
   const [fetchError, setFetchError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { data, error } = jarvisApi.useJarvisV1ListPickedStocksQuery();
+  const { data, error, refetch } = jarvisApi.useJarvisV1ListPickedStocksQuery(null, {refetchOnMountOrArgChange: true});
   const [dailyCloseApi] = jarvisApi.useJarvisV1ListDailyCloseMutation();
 
   useEffect(() => {
@@ -45,5 +45,6 @@ export const usePickedStocks = (startDate: string) => {
     fetchStocksWithHistory();
   }, [data, error, startDate, dailyCloseApi]);
 
-  return { dailyCloses, loading, fetchError };
+
+  return { dailyCloses, loading, fetchError, refetch };
 };

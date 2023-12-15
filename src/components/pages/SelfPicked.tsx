@@ -15,7 +15,12 @@ function getDateTwoMonthsAgo() {
 
 const SelfPicked = () => {
   const startDate = getDateTwoMonthsAgo(); // Set the start date for the history search
-  const { dailyCloses, loading, fetchError } = usePickedStocks(startDate);
+  const { dailyCloses, loading, fetchError, refetch } =
+    usePickedStocks(startDate);
+
+  const handleRefetch = () => {
+    refetch();
+  };
 
   return (
     <header>
@@ -49,7 +54,9 @@ const SelfPicked = () => {
           </Alert>
         </div>
       )}
-      {!loading && !fetchError && <ChartGrid data={dailyCloses} />}
+      {!loading && !fetchError && (
+        <ChartGrid data={dailyCloses} refetch={handleRefetch} />
+      )}
 
       <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
         <a

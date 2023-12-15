@@ -60,7 +60,7 @@ const DailyAnalysis = () => {
           </Alert>
         </div>
       )}
-      {!loading && !fetchError && <ChartGrid data={dailyCloses} />}
+      {!loading && !fetchError && <ChartGrid data={dailyCloses} refetch={()=>{}} />}
 
       <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
         <a

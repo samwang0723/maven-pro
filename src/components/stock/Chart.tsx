@@ -3,6 +3,8 @@ import { createChart } from 'lightweight-charts';
 import RateBadge from './RateBadge';
 import PriceBadge from './PriceBadge';
 import ConcentrationBadge from './ConcentrationBadge';
+import Watch from './Watch';
+import Unwatch from './Unwatch';
 
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
@@ -71,6 +73,8 @@ const Chart = ({
   diff,
   diffPercent,
   analysis,
+  type,
+  refetch,
 }) => {
   const data = parseStockData(input);
   data.sort((a: { timestamp: number }, b: { timestamp: number }) => {
@@ -205,8 +209,13 @@ const Chart = ({
   // price color if diff contains +,use red,otherwise use green
   return (
     <div className="border border-black p-1 bg-black rounded-lg w-64">
+
       <div className="flex justify-between items-center mb-1 mt-2">
-        <div className="text-white font-bold text-sm text-md mr-2 ml-2">
+      <div className="flex justify-end items-center ml-2">
+          { (type === '/watchlist') && <Unwatch id={id} onUnwatch={refetch} /> }
+          { (type !== '/watchlist') && <Watch id={id} watched={false} /> }
+      </div>
+        <div className="text-white font-bold text-sm text-md ml-1 mr-2 truncate">
           {stockName}
         </div>
         <div className="flex items-center mr-2">
