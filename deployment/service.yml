@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: maven-service
+spec:
+  ports:
+  - name: http
+    port: 3004
+    protocol: TCP
+    targetPort: 3004
+  selector:
+    app: maven
