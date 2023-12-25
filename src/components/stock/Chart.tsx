@@ -196,8 +196,13 @@ const Chart = ({
         value: item.volume,
       }));
 
-      candleSeries.setData(candlestickData);
-      volumeSeries.setData(volumeData);
+      const startIndex = Math.max(candlestickData.length - 35, 0);
+      const dataToDisplay = candlestickData.slice(startIndex);
+      candleSeries.setData(dataToDisplay);
+
+      const volStartIndex = Math.max(volumeData.length - 35, 0);
+      const volToDisplay = volumeData.slice(volStartIndex);
+      volumeSeries.setData(volToDisplay);
 
       // Add MA lines using line series
       const ma8Series = chart.addLineSeries({ color: 'orange', lineWidth: 2, priceLineVisible: false, lastValueVisible: false });
@@ -205,9 +210,18 @@ const Chart = ({
       const ma55Series = chart.addLineSeries({ color: 'lightgreen', lineWidth: 2, priceLineVisible: false, lastValueVisible: false });
 
       // Calculate and set data for the MAs
-      ma8Series.setData(calculateMA(candlestickData, 8));
-      ma21Series.setData(calculateMA(candlestickData, 21));
-      ma55Series.setData(calculateMA(candlestickData, 55));
+      const ma8 = calculateMA(candlestickData, 8);
+      const ma21 = calculateMA(candlestickData, 21);
+      const ma55 = calculateMA(candlestickData, 55);
+
+      const ma8StartIndex = Math.max(ma8.length - 35, 0);
+      ma8Series.setData(ma8.slice(ma8StartIndex));
+
+      const ma21StartIndex = Math.max(ma21.length - 35, 0);
+      ma21Series.setData(ma21.slice(ma21StartIndex));
+
+      const ma55StartIndex = Math.max(ma55.length - 35, 0);
+      ma55Series.setData(ma55.slice(ma55StartIndex));
 
       chart.timeScale().fitContent();
 
