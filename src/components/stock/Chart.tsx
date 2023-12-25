@@ -12,7 +12,7 @@ const gridColor = '#1E1E1E';
 const CHART_WIDTH = 64 * 4 - 10;
 const CHART_HEIGHT = 180;
 
-function parseStockData(stockData) {
+const parseStockData = (stockData) => {
   return stockData.map((item) => {
     // Return a new object with only the required fields
     return {
@@ -25,11 +25,11 @@ function parseStockData(stockData) {
       turnover: item.turnover,
     };
   });
-}
+};
 
 // identify highest and lowest price from data loop
 // and attach marker on series
-function markHighLow(series, data) {
+const markHighLow = (series, data) => {
   let highest = data[0];
   let lowest = data[0];
   for (let i = 1; i < data.length; i++) {
@@ -63,7 +63,20 @@ function markHighLow(series, data) {
     return 0;
   });
   series.setMarkers(mData);
-}
+};
+
+// This function calculates a simple moving average for the given period
+const calculateMA = (data, period) => {
+  let ma = [];
+  for (let i = period - 1; i < data.length; i++) {
+    let sum = 0;
+    for (let j = 0; j < period; j++) {
+      sum += data[i - j].close;
+    }
+    ma.push({ time: data[i].time, value: sum / period });
+  }
+  return ma;
+};
 
 const Chart = ({
   id,
@@ -186,6 +199,16 @@ const Chart = ({
       candleSeries.setData(candlestickData);
       volumeSeries.setData(volumeData);
 
+      // Add MA lines using line series
+      const ma8Series = chart.addLineSeries({ color: 'orange', lineWidth: 2, priceLineVisible: false, lastValueVisible: false });
+      const ma21Series = chart.addLineSeries({ color: 'lightblue', lineWidth: 2, priceLineVisible: false, lastValueVisible: false });
+      const ma55Series = chart.addLineSeries({ color: 'lightgreen', lineWidth: 2, priceLineVisible: false, lastValueVisible: false });
+
+      // Calculate and set data for the MAs
+      ma8Series.setData(calculateMA(candlestickData, 8));
+      ma21Series.setData(calculateMA(candlestickData, 21));
+      ma55Series.setData(calculateMA(candlestickData, 55));
+
       chart.timeScale().fitContent();
 
       // This is a workaround to avoid canvas z-index break other div
@@ -209,12 +232,11 @@ const Chart = ({
   // price color if diff contains +,use red,otherwise use green
   return (
     <div className="border border-black p-1 bg-black rounded-lg w-64">
-
       <div className="flex justify-between items-center mb-1 mt-2">
-      <div className="flex justify-end items-center ml-2">
-          { (type === '/watchlist') && <Unwatch id={id} onUnwatch={refetch} /> }
-          { (type !== '/watchlist') && <Watch id={id} watched={false} /> }
-      </div>
+        <div className="flex justify-end items-center ml-2">
+          {type === '/watchlist' && <Unwatch id={id} onUnwatch={refetch} />}
+          {type !== '/watchlist' && <Watch id={id} watched={false} />}
+        </div>
         <div className="text-white font-bold text-sm text-md ml-1 mr-2 truncate">
           {stockName}
         </div>
