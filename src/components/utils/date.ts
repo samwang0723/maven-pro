@@ -1,6 +1,6 @@
 export const getDateTwoMonthsAgo = (date) => {
   const d = new Date(date);
-  d.setMonth(d.getMonth() - 2);
+  d.setMonth(d.getMonth() - 4);
 
   return formatDate(d);
 }
