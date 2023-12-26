@@ -8,78 +8,56 @@ interface CandleStickBarProps {
   close: number;
 }
 
-function drawCandleStick({
-  id,
-  high,
-  low,
-  open,
-  close,
-}: CandleStickBarProps): void {
+function drawCandleStick({ id, high, low, open, close }) {
   // Get the canvas element
   const canvas = document.getElementsByClassName(
     `canvas${id}`
   )[0] as HTMLCanvasElement;
-    if (!canvas) return;
+  var ctx = canvas.getContext('2d');
 
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  // Adjust for device pixel ratio to avoid blurriness on high-DPI displays
-  const dpr = window.devicePixelRatio || 1;
-  const styleWidth = 6;
-  const styleHeight = 18;
-  canvas.width = styleWidth * dpr;
-  canvas.height = styleHeight * dpr;
-  ctx.scale(dpr, dpr);
-
-
-  // Clear the canvas before drawing
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Set canvas width and height explicitly
+  canvas.width = Math.floor(canvas.clientWidth);
+  canvas.height = Math.floor(canvas.clientHeight);
 
   // Draw the wick
-  let maxValue = high;
-  let minValue = low;
-  let gap = maxValue - minValue;
+  var maxValue = high;
+  var minValue = low;
+  var gap = maxValue - minValue;
   if (gap === 0) {
     gap = 1.5;
   }
-  const ratio = styleHeight / gap; // Adjust ratio for the canvas size
+  let ratio = canvas.height / (maxValue - minValue);
 
   // scale down the values
-  high = Math.round((high - minValue) * ratio);
-  low = Math.round((low - minValue) * ratio);
-  open = Math.round((open - minValue) * ratio);
-  close = Math.round((close - minValue) * ratio);
+  high = Math.round((high - minValue + 0.0001) * ratio);
+  low = Math.round((low - minValue + 0.0001) * ratio);
+  open = Math.round((open - minValue + 0.0001) * ratio);
+  close = Math.round((close - minValue + 0.0001) * ratio);
 
   // set candlestick bar color
-  let barColor = close > open ? 'red' : 'green';
+  let barColor = 'green';
+  if (close > open) {
+    barColor = 'red';
+  }
 
   // draw candlestick bar
   ctx.fillStyle = barColor;
   let diff = Math.abs(open - close);
-  diff = diff >= 1 ? diff : 1; // Ensure a minimum thickness of 1px for visibility
+  diff = diff > 1 ? diff : 2;
 
   let max = Math.max(open, close);
-  max = max !== Infinity && max > 0 ? max : styleHeight;
+  max = max !== Infinity && max > 1 ? max : 20;
   max = Math.round(max);
   diff = Math.round(diff);
 
-  // Use integer values for pixel-perfect drawing
-  const barWidth = 12; // Width of the candlestick bar
-  const x = Math.round((styleWidth - barWidth) / 2); // Center the candlestick on the canvas
-  const y = Math.round(styleHeight - max); // Position the bar from the bottom of the canvas
-
-  ctx.fillRect(x, y, barWidth, diff);
+  ctx.fillRect(4, canvas.height - max, 12, diff);
 
   // draw wick
   ctx.strokeStyle = barColor;
-  ctx.lineWidth = 1; // Set line width to 1px for a sharp line
   ctx.beginPath();
-  const lineX = Math.round(styleWidth / 2);
-  ctx.moveTo(lineX, styleHeight - high);
-  ctx.lineTo(lineX, styleHeight - low);
-  ctx.stroke();  
-
+  ctx.moveTo(Math.floor(canvas.width / 2) + 0.5, high + 0.5);
+  ctx.lineTo(Math.floor(canvas.width / 2) + 0.5, low + 0.5);
+  ctx.stroke();
 }
 
 const CandleStickBar: React.FC<CandleStickBarProps> = ({
