@@ -1,20 +1,11 @@
 import ChartGrid from '../stock/ChartGrid';
 import { usePickedStocks } from '../../features/aggregators/pickedStocks';
 import Alert from '../general/Alert';
-
-function getDateTwoMonthsAgo() {
-  const currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth() - 2);
-
-  const year = currentDate.getFullYear();
-  const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-  const day = ('0' + currentDate.getDate()).slice(-2);
-
-  return `${year}${month}${day}`;
-}
+import {getDateTwoMonthsAgo} from '../utils/date';
 
 const SelfPicked = () => {
-  const startDate = getDateTwoMonthsAgo(); // Set the start date for the history search
+  const today = new Date();
+  const startDate = getDateTwoMonthsAgo(today); // Set the start date for the history search
   const { dailyCloses, loading, fetchError, refetch } =
     usePickedStocks(startDate);
 
