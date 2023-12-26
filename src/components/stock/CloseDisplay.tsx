@@ -6,14 +6,13 @@ const CloseDisplay = ({
   quoteChange: number;
 }) => {
   // Determine the Tailwind CSS class based on the number's value
-  const compare = quoteChange ? quoteChange : close;
   const textColorClass =
-    compare > 0
+    quoteChange > 0
       ? 'text-red-500'
-      : compare < 0
+      : quoteChange < 0
       ? 'text-green-600'
-      : 'text-gray-800'; // darkgrey
-  const text = compare > 0 ? '▲' : compare < 0 ? '▼' : '';
+      : 'text-gray-600'; // darkgrey
+  const text = quoteChange > 0 ? '▲' : quoteChange < 0 ? '▼' : '';
 
   return (
     <div className="flex items-center gap-x-3">

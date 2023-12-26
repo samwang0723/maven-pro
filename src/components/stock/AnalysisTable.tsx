@@ -4,7 +4,8 @@ import CategoryDisplay from './CategoryDisplay';
 import CloseDisplay from './CloseDisplay';
 import CandleStickBar from './CandleStickBar';
 
-const AnalysisTable = ({ data }) => {
+const AnalysisTable = ({ title, subtitle, data }) => {
+  console.log(data);
   return (
     <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       <div className="flex flex-col">
@@ -13,10 +14,10 @@ const AnalysisTable = ({ data }) => {
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                  Watchlist Latest Price with Analysis
+                  {title}
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Pay attention to the concentration changes and the candlestick shape
+                  {subtitle}
                 </p>
               </div>
 
@@ -33,7 +34,7 @@ const AnalysisTable = ({ data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start whitespace-nowrap "
+                      className="px-3 py-3 text-start whitespace-nowrap "
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Stock
@@ -150,7 +151,7 @@ const AnalysisTable = ({ data }) => {
                           <RateBadge analysis={stock} />
                         </td>
 
-                        <td className="h-px w-px whitespace-nowrap px-6 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <div className="flex items-center gap-x-2">
                             <div className="grow">
                               <span className="block text-sm font-semibold text-gray-800 dark:text-white">
@@ -169,7 +170,7 @@ const AnalysisTable = ({ data }) => {
                             />
                           </div>
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-1 py-3">
                           <CategoryDisplay text={stock.category} />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
@@ -189,51 +190,59 @@ const AnalysisTable = ({ data }) => {
                           <NumberDisplay
                             value={stock.concentration1}
                             percent={true}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.concentration5}
                             percent={true}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.concentration10}
                             percent={true}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.concentration20}
                             percent={true}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.concentration60}
                             percent={true}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
-                          <NumberDisplay value={stock.trust} percent={false} />
+                          <NumberDisplay value={stock.trust} percent={false} size={'xs'} />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.trust10}
                             percent={false}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.foreign}
                             percent={false}
+                            size={'xs'}
                           />
                         </td>
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay
                             value={stock.foreign10}
                             percent={false}
+                            size={'xs'}
                           />
                         </td>
                       </tr>
