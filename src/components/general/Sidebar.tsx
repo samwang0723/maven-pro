@@ -44,7 +44,7 @@ const Sidebar = () => {
         <ul className="space-y-1.5">
           <li onClick={dismissOverlay}>
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
                 isActive
                   ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
