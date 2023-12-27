@@ -4,6 +4,7 @@ import { jarvisApi } from '../../features/apis/jarvisApi';
 import Calendar from '../stock/Calendar';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../utils/date';
+import StockCard from '../widget/StockCard';
 
 const Dashboard = () => {
   const today = new Date();
@@ -50,6 +51,12 @@ const Dashboard = () => {
             </Alert>
           </div>
         )}
+        <div className="flex flex-wrap gap-3 items-center mb-8">
+          <StockCard id={'TAIEX'} name={'加權指數'} />
+          <StockCard id={'TPEx'} name={'櫃買指數'} />
+          <StockCard id={'^DJI'} dataset={'USStockPrice'} name={'Dow Jones'} />
+          <StockCard id={'^IXIC'} dataset={'USStockPrice'} name={'NASDAQ'} />
+        </div>
         <Calendar onDateChange={handleDateChange} />
       </div>
       <AnalysisTable

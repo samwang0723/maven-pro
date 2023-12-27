@@ -1,19 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import authSlice from './slices/authSlice';
 import { jarvisApi } from './apis/jarvisApi';
+import { finmindApi } from './apis/finMindApi';
 
 const store = configureStore({
   reducer: {
     auth: authSlice,
     [jarvisApi.reducerPath]: jarvisApi.reducer,
+    [finmindApi.reducerPath]: finmindApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(jarvisApi.middleware)
+    getDefaultMiddleware().concat([
+      jarvisApi.middleware,
+      finmindApi.middleware,
+    ]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch: () => AppDispatch = useDispatch
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export default store;

@@ -1,8 +1,8 @@
-export const getDateTwoMonthsAgo = (date) => {
+export const getDateTwoMonthsAgo = (date, separator = '', days = 50) => {
   const d = new Date(date);
-  d.setMonth(d.getMonth() - 2);
+  d.setDate(d.getDate() - days);
 
-  return formatDate(d);
+  return formatDate(d, separator);
 }
 
 export const addOneDay = (date) => {
@@ -12,10 +12,10 @@ export const addOneDay = (date) => {
   return formatDate(d);
 }
 
-export const formatDate = (date) => {
+export const formatDate = (date, separator = '') => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = `0${d.getMonth() + 1}`.slice(-2); // Months are 0-indexed, add 1
   const day = `0${d.getDate()}`.slice(-2);
-  return `${year}${month}${day}`;
+  return `${year}${separator}${month}${separator}${day}`;
 };
