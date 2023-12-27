@@ -42,7 +42,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
 
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-1 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Industry
@@ -151,9 +151,9 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                         </td>
 
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
-                          <div className="flex items-center gap-x-2">
+                          <div className="flex items-center gap-x-1">
                             <div className="grow">
-                              <span className="block text-sm font-semibold text-gray-800 dark:text-white">
+                              <span className="block text-sm w-14 font-semibold text-gray-800 dark:text-white whitespace-normal">
                                 {stock.name}
                               </span>
                               <span className="block text-sm text-gray-500">

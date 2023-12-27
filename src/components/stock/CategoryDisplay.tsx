@@ -5,7 +5,7 @@ const CategoryDisplay = ({ text }) => {
   const market = data[1] === 'tse' ? '上市' : '上櫃';
   return (
     <div className="flex items-center gap-x-2">
-      <span className="text-sm text-gray-800 dark:text-white">{category}</span>
+      <span className="text-xs text-gray-800 dark:text-white w-16 whitespace-normal">{category}</span>
       <span className="text-xs text-gray-500">{market}</span>
     </div>
   );
