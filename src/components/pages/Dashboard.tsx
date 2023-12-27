@@ -42,14 +42,16 @@ const Dashboard = () => {
 
   return (
     <>
-      {error && (
-        <div className="flex mt-1">
-          <Alert show={true} onDismiss={() => {}}>
-            <span className="font-semibold">Error:</span> {error}
-          </Alert>
-        </div>
-      )}
-      <Calendar onDateChange={handleDateChange} />
+      <div className="px-1 py-2 sm:px-1 lg:px-8 lg:py-2 mx-auto">
+        {error && (
+          <div className="flex mt-1">
+            <Alert show={true} onDismiss={() => {}}>
+              <span className="font-semibold">Error:</span> {error}
+            </Alert>
+          </div>
+        )}
+        <Calendar onDateChange={handleDateChange} />
+      </div>
       <AnalysisTable
         data={selections}
         title={'Daily Analysis of outperforming Stocks'}

@@ -5,9 +5,8 @@ import CloseDisplay from './CloseDisplay';
 import CandleStickBar from './CandleStickBar';
 
 const AnalysisTable = ({ title, subtitle, data }) => {
-  console.log(data);
   return (
-    <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+    <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-6 mx-auto">
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
