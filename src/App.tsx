@@ -133,7 +133,7 @@ const App: React.FC = () => {
                 <Header />
                 <Navbar />
                 <Sidebar />
-                <div className="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
+                <div className="w-full pt-4 px-4 sm:px-6 md:px-8 lg:ps-72">
                   <Outlet />
                   <Footer />
                 </div>

@@ -6,7 +6,7 @@ import CandleStickBar from './CandleStickBar';
 
 const AnalysisTable = ({ title, subtitle, data }) => {
   return (
-    <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-6 mx-auto">
+    <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-3 lg:py-3 mx-auto">
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="p-1.5 min-w-full inline-block align-middle">
@@ -25,7 +25,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-start whitespace-nowrap "
+                      className="px-3 py-3 text-start whitespace-nowrap "
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Rate
@@ -33,25 +33,17 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap "
+                      className="px-2 py-3 text-start whitespace-nowrap "
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Stock
                       </span>
                     </th>
 
-                    <th
-                      scope="col"
-                      className="px-1 py-3 text-start whitespace-nowrap"
-                    >
-                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                        Industry
-                      </span>
-                    </th>
 
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-1 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Close
@@ -60,7 +52,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
 
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-1 py-3 text-start whitespace-nowrap pr-3"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Volume
@@ -93,7 +85,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-2 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         20 Day
@@ -101,7 +93,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-2 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         60 Day
@@ -117,7 +109,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-2 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Trust 10
@@ -133,10 +125,19 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3 text-start whitespace-nowrap"
+                      className="px-2 py-3 text-start whitespace-nowrap"
                     >
                       <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         Foreign 10
+                      </span>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-1 py-3 text-start whitespace-nowrap"
+                    >
+                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        Industry
                       </span>
                     </th>
                   </tr>
@@ -146,11 +147,11 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                   {data && data.entries && data.entries.length > 0 ? (
                     data.entries.map((stock) => (
                       <tr key={stock.stockID}>
-                        <td className="h-px w-px whitespace-nowrap px-6 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <RateBadge analysis={stock} />
                         </td>
 
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <div className="flex items-center gap-x-1">
                             <div className="grow">
                               <span className="block text-sm w-14 font-semibold text-gray-800 dark:text-white whitespace-normal">
@@ -169,16 +170,14 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                             />
                           </div>
                         </td>
+
                         <td className="h-px w-px whitespace-nowrap px-1 py-3">
-                          <CategoryDisplay text={stock.category} />
-                        </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <CloseDisplay
                             close={stock.close}
                             quoteChange={stock.quoteChange}
                           />
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-1 py-3">
                           <span className="text-sm text-gray-800 dark:text-white">
                             {new Intl.NumberFormat('en-US').format(
                               stock.volume
@@ -206,14 +205,14 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                             size={'xs'}
                           />
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <NumberDisplay
                             value={stock.concentration20}
                             percent={true}
                             size={'xs'}
                           />
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <NumberDisplay
                             value={stock.concentration60}
                             percent={true}
@@ -223,7 +222,7 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                         <td className="h-px w-px whitespace-nowrap px-3 py-3">
                           <NumberDisplay value={stock.trust} percent={false} size={'xs'} />
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <NumberDisplay
                             value={stock.trust10}
                             percent={false}
@@ -237,12 +236,15 @@ const AnalysisTable = ({ title, subtitle, data }) => {
                             size={'xs'}
                           />
                         </td>
-                        <td className="h-px w-px whitespace-nowrap px-3 py-3">
+                        <td className="h-px w-px whitespace-nowrap px-2 py-3">
                           <NumberDisplay
                             value={stock.foreign10}
                             percent={false}
                             size={'xs'}
                           />
+                        </td>
+                        <td className="h-px w-px whitespace-nowrap px-1 py-3">
+                          <CategoryDisplay text={stock.category} />
                         </td>
                       </tr>
                     ))

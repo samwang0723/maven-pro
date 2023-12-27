@@ -30,7 +30,7 @@ const PriceBadge = ({
           {close}
         </span>
         <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-red-100 text-red-800 rounded-md dark:bg-red-500/10 dark:text-red-500">
-          +{diff}
+          ▲ {diff}
         </span>
 
         <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-red-100 text-red-800 rounded-md dark:bg-red-500/10 dark:text-red-500">
@@ -61,7 +61,7 @@ const PriceBadge = ({
           {close}
         </span>
         <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-teal-100 text-teal-800 rounded-md dark:bg-teal-500/10 dark:text-teal-500">
-          {diff}
+          ▼ {diff * -1}
         </span>
 
         <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs text-sm font-bold bg-teal-100 text-teal-800 rounded-md dark:bg-teal-500/10 dark:text-teal-500">

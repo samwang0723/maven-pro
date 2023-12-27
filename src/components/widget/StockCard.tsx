@@ -2,11 +2,11 @@ import { useGetStockPriceQuery } from '../../features/apis/finMindApi';
 import { useRef, useEffect } from 'react';
 import { createChart } from 'lightweight-charts';
 import { formatDate, getDateTwoMonthsAgo } from '../utils/date';
+import PriceBadge from '../stock/PriceBadge';
 
 const red = 'rgba(249, 40, 85, 1.0)';
 const green = 'rgba(45, 192, 142, 1.0)';
 const gridColor = '#1E1E1E';
-const CHART_WIDTH = 64 * 4 - 10;
 const CHART_HEIGHT = 180;
 
 const parseStockData = (stockData) => {
@@ -14,19 +14,18 @@ const parseStockData = (stockData) => {
     return [];
   }
 
-console.log(stockData);
-    return stockData.map((item) => {
-      // Return a new object with only the required fields
-      return {
-        timestamp: item.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'),
-        open: item.open ? item.open : item.Open,
-        high: item.max ? item.max : item.High,
-        low: item.min ? item.min : item.Low,
-        close: item.close ? item.close : item.Close,
-        volume: item.Trading_Volume ? item.Trading_Volume : item.Volume,
-        turnover: item.Trading_turnover ? item.Trading_turnover : 0,
-      };
-    });
+  return stockData.map((item) => {
+    // Return a new object with only the required fields
+    return {
+      timestamp: item.date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'),
+      open: item.open ? item.open : item.Open,
+      high: item.max ? item.max : item.High,
+      low: item.min ? item.min : item.Low,
+      close: item.close ? item.close : item.Close,
+      volume: item.Trading_Volume ? item.Trading_Volume : item.Volume,
+      turnover: item.Trading_turnover ? item.Trading_turnover : 0,
+    };
+  });
 };
 
 // identify highest and lowest price from data loop
@@ -84,7 +83,7 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
   const today = new Date();
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoiMjAyMy0xMi0yNyAxMDo1MDozNyIsInVzZXJfaWQiOiJzYW13YW5nMDcyMyIsImlwIjoiMTE0LjQxLjc0LjEwMCJ9.1myIcMA0InqyuG9zQleSkhU-wRf3DVQox5GUVJy8xVQ';
-  const { data, error, isLoading } = useGetStockPriceQuery({
+  const { data } = useGetStockPriceQuery({
     dataset,
     data_id: id, //'TAIEX',
     start_date: getDateTwoMonthsAgo(today, '-', 40),
@@ -102,14 +101,14 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (chartContainerRef.current) {
+    if (chartContainerRef.current && fdata.length > 0) {
       const chart = createChart(chartContainerRef.current, {
         width: chartContainerRef.current.clientWidth,
         height: CHART_HEIGHT,
         handleScroll: false,
         handleScale: false,
         layout: {
-          fontSize: 11,
+          fontSize: 9,
           textColor: 'white',
           background: { color: 'black' },
         },
@@ -176,6 +175,8 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
           type: 'volume',
         },
         priceScaleId: '',
+        priceLineVisible: false,
+        lastValueVisible: false,
       });
       volumeSeries.priceScale().applyOptions({
         scaleMargins: {
@@ -204,19 +205,19 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
       // Add MA lines using line series
       const ma8Series = chart.addLineSeries({
         color: 'orange',
-        lineWidth: 2,
+        lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
       });
       const ma21Series = chart.addLineSeries({
         color: 'lightblue',
-        lineWidth: 2,
+        lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
       });
       const ma55Series = chart.addLineSeries({
         color: 'lightgreen',
-        lineWidth: 2,
+        lineWidth: 1,
         priceLineVisible: false,
         lastValueVisible: false,
       });
@@ -228,34 +229,35 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
 
       chart.timeScale().fitContent();
 
-      // This is a workaround to avoid canvas z-index break other div
-      var screenshot = chart.takeScreenshot();
-      screenshot.style.width = CHART_WIDTH + 'px';
-      screenshot.style.height = CHART_HEIGHT + 'px';
-
-      while (chartContainerRef.current.firstChild) {
-        chartContainerRef.current.removeChild(
-          chartContainerRef.current.firstChild
-        );
-      }
-      chartContainerRef.current.appendChild(screenshot);
-
       return () => {
         chart.remove();
       };
     }
   }, [id, fdata]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.toString()}</div>;
+  const index = fdata.length - 1;
+  if (index < 0) return <div></div>;
+  const closeTag = fdata[fdata.length - 1].close;
+  const diff = +(
+    fdata[fdata.length - 1].close - fdata[fdata.length - 2].close
+  ).toFixed(2);
+  const diffPercent = +((diff / fdata[fdata.length - 2].close) * 100).toFixed(
+    2
+  );
 
   // price color if diff contains +,use red,otherwise use green
   return (
     <div className="border border-black p-1 bg-black rounded-lg w-64">
-      <div className="flex justify-center items-center mb-1 mt-2">
-        <div className="text-white font-bold text-lg truncate text-center">
-          {name}
-        </div>
+      <div className="flex justify-start mb-1 mt-2">
+        <div className="text-white text-md text-sm truncate pl-3">{name}</div>
+        <span className="text-xs text-gray-500 pl-1 pt-1">{id}</span>
+      </div>
+      <div className="flex justify-between gap-1 text-xs mr-2 ml-2 mb-1">
+        <PriceBadge
+          close={closeTag}
+          diff={diff}
+          diffPercent={diffPercent.toString() + '%'}
+        />
       </div>
       <div ref={chartContainerRef} id={id} />
     </div>

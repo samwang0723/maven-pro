@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="px-1 py-2 sm:px-1 lg:px-8 lg:py-2 mx-auto">
+      <div className="px-1 py-2 sm:px-1 lg:px-3 lg:py-2 mx-auto">
         {error && (
           <div className="flex mt-1">
             <Alert show={true} onDismiss={() => {}}>
@@ -51,11 +51,11 @@ const Dashboard = () => {
             </Alert>
           </div>
         )}
-        <div className="flex flex-wrap gap-3 items-center mb-8">
+        <div className="flex flex-wrap gap-2 items-center mb-4">
           <StockCard id={'TAIEX'} name={'加權指數'} />
           <StockCard id={'TPEx'} name={'櫃買指數'} />
-          <StockCard id={'^DJI'} dataset={'USStockPrice'} name={'Dow Jones'} />
-          <StockCard id={'^IXIC'} dataset={'USStockPrice'} name={'NASDAQ'} />
+          <StockCard id={'^DJI'} dataset={'USStockPrice'} name={'道瓊斯指數'} />
+          <StockCard id={'^IXIC'} dataset={'USStockPrice'} name={'納斯達克綜合指數'} />
         </div>
         <Calendar onDateChange={handleDateChange} />
       </div>
