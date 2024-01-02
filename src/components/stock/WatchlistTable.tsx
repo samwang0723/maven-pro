@@ -3,47 +3,13 @@ import NumberDisplay from './NumberDisplay';
 import CategoryDisplay from './CategoryDisplay';
 import CloseDisplay from './CloseDisplay';
 import CandleStickBar from './CandleStickBar';
-import Calendar from '../stock/Calendar';
 import Alert from '../general/Alert';
-import { useEffect, useState } from 'react';
-import { formatDate } from '../utils/date';
 import { jarvisApi } from '../../features/apis/jarvisApi';
-import { V1ListSelectionResponse } from '../../features/apis/jarvisApi';
 
-const AnalysisTable = ({ title, subtitle }) => {
-  const today = new Date();
-  const [error, setError] = useState('');
-  const [selectedDate, setSelectedDate] = useState(formatDate(today));
-  const [data, setData] = useState<V1ListSelectionResponse | null>(null);
-  const [selectionApi] = jarvisApi.useJarvisV1ListSelectionsMutation();
-
-  const handleDateChange = (date) => {
-    const formattedDate = formatDate(date);
-    setSelectedDate(formattedDate);
-  };
-
-  const fetchSelections = async () => {
-    try {
-      const selectionData = await selectionApi({
-        v1ListSelectionRequest: {
-          date: selectedDate,
-          strict: false,
-        },
-      }).unwrap();
-
-      if (!selectionData.entries || selectionData.entries.length === 0) {
-        return;
-      }
-
-      setData(selectionData);
-    } catch (e) {
-      setError(e.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchSelections();
-  }, [selectedDate]);
+const WatchlistTable = ({ title, subtitle }) => {
+  const { data, error } = jarvisApi.useJarvisV1ListPickedStocksQuery(null, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-3 lg:py-3 mx-auto">
@@ -52,17 +18,12 @@ const AnalysisTable = ({ title, subtitle }) => {
           <div className="p-1.5 min-w-full inline-block align-middle">
             <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex flex-col md:flex-row justify-start items-start md:items-center">
-                  <div className="mb-2 mr-6 md:mb-0">
-                    <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                      {title}
-                    </h2>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {subtitle}
-                    </p>
-                  </div>
-                  <Calendar onDateChange={handleDateChange} />
-                </div>
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                  {title}
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {subtitle}
+                </p>
               </div>
               {error && (
                 <div className="flex mt-1">
@@ -315,4 +276,4 @@ const AnalysisTable = ({ title, subtitle }) => {
   );
 };
 
-export default AnalysisTable;
+export default WatchlistTable;

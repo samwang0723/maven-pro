@@ -1,4 +1,4 @@
-.PHONY: test lint bench lint-skip-fix migrate proto build build-docker
+.PHONY: test lint build build-docker generate
 
 help: ## show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -35,6 +35,9 @@ docker-amd64:
 		--build-arg LAST_MAIN_COMMIT_HASH=$(LAST_MAIN_COMMIT_HASH) \
 		--build-arg LAST_MAIN_COMMIT_TIME=$(LAST_MAIN_COMMIT_TIME) \
 		-f deployment/Dockerfile .
+
+generate:
+	@npx @rtk-query/codegen-openapi openapi-config.ts
 
 #############
 # changelog #

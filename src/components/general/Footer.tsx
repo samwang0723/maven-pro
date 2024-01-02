@@ -14,7 +14,7 @@ const Footer = () => {
 
         <div className="mt-3">
           <p className="text-gray-500">
-            © Maven Strategy Pte.ltd. 2023 All rights reserved.
+            © Maven Strategy Pte.ltd. 2023-2024 All rights reserved.
           </p>
         </div>
 
