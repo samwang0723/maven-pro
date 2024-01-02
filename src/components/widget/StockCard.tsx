@@ -205,19 +205,19 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
       // Add MA lines using line series
       const ma8Series = chart.addLineSeries({
         color: 'orange',
-        lineWidth: 1,
+        lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
       });
       const ma21Series = chart.addLineSeries({
         color: 'lightblue',
-        lineWidth: 1,
+        lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
       });
       const ma55Series = chart.addLineSeries({
         color: 'lightgreen',
-        lineWidth: 1,
+        lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
       });
