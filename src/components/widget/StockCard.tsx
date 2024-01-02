@@ -1,4 +1,5 @@
 import { useGetStockPriceQuery } from '../../features/apis/finMindApi';
+import { useGetIndexPriceQuery } from '../../features/apis/misApi';
 import { useRef, useEffect } from 'react';
 import { createChart } from 'lightweight-charts';
 import { formatDate, getDateTwoMonthsAgo } from '../utils/date';
@@ -22,7 +23,7 @@ const parseStockData = (stockData) => {
       high: item.max ? item.max : item.High,
       low: item.min ? item.min : item.Low,
       close: item.close ? item.close : item.Close,
-      volume: item.Trading_Volume ? item.Trading_Volume : item.Volume,
+      volume: item.Trading_money ? item.Trading_money : item.Volume,
       turnover: item.Trading_turnover ? item.Trading_turnover : 0,
     };
   });
@@ -79,7 +80,21 @@ const calculateMA = (data, period) => {
   return ma;
 };
 
+const getIndexKey = (id) => {
+  switch (id) {
+    case 'TAIEX':
+      return 'tse_t00.tw';
+    case 'TPEx':
+      return 'otc_o00.tw';
+    default:
+      return '';
+  }
+};
+
 const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
+  const indexKey = getIndexKey(id);
+  const { data: indexData } = useGetIndexPriceQuery(indexKey);
+
   const today = new Date();
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRlIjoiMjAyMy0xMi0yNyAxMDo1MDozNyIsInVzZXJfaWQiOiJzYW13YW5nMDcyMyIsImlwIjoiMTE0LjQxLjc0LjEwMCJ9.1myIcMA0InqyuG9zQleSkhU-wRf3DVQox5GUVJy8xVQ';
@@ -98,6 +113,23 @@ const StockCard = ({ id, name, dataset = 'TaiwanStockPrice' }) => {
     }
     return 0;
   });
+
+  if (
+    indexData &&
+    indexData.length > 0 && fdata.length > 0 &&
+    indexData[0].d.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3') !==
+      fdata[fdata.length - 1].timestamp
+  ) {
+    let source = indexData[0];
+    fdata.push({
+      timestamp: source.d.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'),
+      open: parseFloat(source.o),
+      high: parseFloat(source.h),
+      low: parseFloat(source.l),
+      close: parseFloat(source.z),
+      volume: parseInt(source.v, 10) * 1000000,
+    });
+  }
 
   const chartContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
