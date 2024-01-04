@@ -12,6 +12,7 @@ import Signup from './components/auth/Signup';
 import Forgotpassword from './components/auth/Forgotpassword';
 import DailyAnalysis from './components/pages/DailyAnalysis';
 import Dashboard from './components/pages/Dashboard';
+import Faq from './components/pages/Faq';
 import { selectAuth, setToken } from './features/slices/authSlice';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -143,6 +144,7 @@ const App: React.FC = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/watchlist" element={<SelfPicked />} />
             <Route path="/analysis" element={<DailyAnalysis />} />
+            <Route path="/faq" element={<Faq />} />
           </Route>
         </Routes>
       </div>

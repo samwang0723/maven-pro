@@ -5,6 +5,7 @@ const routeMap = {
   '/watchlist': { parent: 'Selection', page: 'Watchlist' },
   '/analysis': { parent: 'Selection', page: 'Analysis' },
   '/dashboard': { parent: 'Home', page: 'Dashboard' },
+  '/faq': { parent: 'Home', page: 'FAQ' },
   '/': { parent: 'Home', page: 'Dashboard' },
 };
 
