@@ -6,6 +6,7 @@ const routeMap = {
   '/analysis': { parent: 'Selection', page: 'Analysis' },
   '/dashboard': { parent: 'Home', page: 'Dashboard' },
   '/faq': { parent: 'Home', page: 'FAQ' },
+  '/calendar': { parent: 'Home', page: 'Calendar' },
   '/': { parent: 'Home', page: 'Dashboard' },
 };
 

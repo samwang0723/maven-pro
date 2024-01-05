@@ -110,9 +110,10 @@ const Faq = () => {
                 aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two"
               >
                 <p className="text-gray-600 dark:text-gray-400">
-                  Once you signup as maven-pro member, we will issuing NT$300,000 into your ledger.
-                  You can try using that balance to practice your strategy in stock market. We are also
-                  exploring real money topup but pending on legal review.
+                  Once you signup as maven-pro member, we will issuing
+                  NT$300,000 into your ledger. You can try using that balance to
+                  practice your strategy in stock market. We are also exploring
+                  real money topup but pending on legal review.
                 </p>
               </div>
             </div>
@@ -161,8 +162,9 @@ const Faq = () => {
                 aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three"
               >
                 <p className="text-gray-600 dark:text-gray-400">
-                  Our subscriptions will be tiered. As of 2024, 1st Jan we only opening standard tier.
-                  More tiers will be coming soon with advanced functionalities.
+                  Our subscriptions will be tiered. As of 2024, 1st Jan we only
+                  opening standard tier. More tiers will be coming soon with
+                  advanced functionalities.
                 </p>
               </div>
             </div>
@@ -211,10 +213,12 @@ const Faq = () => {
                 aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-four"
               >
                 <p className="text-gray-600 dark:text-gray-400">
-                  What Maven-pro recommended are advices, you still need to evaluate yourself
-                  including strategy backtest, market condition, risk assessment, etc.
-                  Following anyone to execute the order will not be a wise way, use the platform
-                  to develop your knowledge and strategy and define a long-term suitable solution.
+                  What Maven-pro recommended are advices, you still need to
+                  evaluate yourself including strategy backtest, market
+                  condition, risk assessment, etc. Following anyone to execute
+                  the order will not be a wise way, use the platform to develop
+                  your knowledge and strategy and define a long-term suitable
+                  solution.
                 </p>
               </div>
             </div>
@@ -263,9 +267,10 @@ const Faq = () => {
                 aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-five"
               >
                 <p className="text-gray-600 dark:text-gray-400">
-                  Orders on Maven-pro are strictly follows the financial best practice using
-                  double-entry accounting and not modifiable, if you made a wrong order, need
-                  to place another reverse order to correct it from ledger.
+                  Orders on Maven-pro are strictly follows the financial best
+                  practice using double-entry accounting and not modifiable, if
+                  you made a wrong order, need to place another reverse order to
+                  correct it from ledger.
                 </p>
               </div>
             </div>

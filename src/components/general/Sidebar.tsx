@@ -239,9 +239,13 @@ const Sidebar = () => {
           </li>
 
           <li onClick={dismissOverlay}>
-            <Link
-              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
-              to="#"
+            <NavLink
+              to="/calendar"
+              className={({ isActive }) =>
+                isActive
+                  ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
+                  : 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-white dark:focus:outline-none'
+              }
             >
               <svg
                 className="flex-shrink-0 w-4 h-4"
@@ -267,7 +271,7 @@ const Sidebar = () => {
                 <path d="M16 18h.01" />
               </svg>
               Calendar
-            </Link>
+            </NavLink>
           </li>
           <li onClick={dismissOverlay}>
             <Link

@@ -17,6 +17,7 @@ import { selectAuth, setToken } from './features/slices/authSlice';
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
+import Calendar from './components/pages/Calendar';
 
 // Create a context for theme management
 const ThemeContext = createContext({
@@ -145,6 +146,7 @@ const App: React.FC = () => {
             <Route path="/watchlist" element={<SelfPicked />} />
             <Route path="/analysis" element={<DailyAnalysis />} />
             <Route path="/faq" element={<Faq />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
         </Routes>
       </div>

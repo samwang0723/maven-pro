@@ -66,7 +66,7 @@ const AnalysisTable = ({ title, subtitle }) => {
                 </div>
               </div>
               {error && (
-                <div className="flex mt-4 ml-4">
+                <div className="flex mt-4 ml-4 mb-4">
                   <Alert show={true} onDismiss={() => {}}>
                     <span className="font-semibold">Error: </span>Unable to fetch daily analysis
                   </Alert>
