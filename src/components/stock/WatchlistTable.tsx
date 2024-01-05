@@ -11,6 +11,8 @@ const WatchlistTable = ({ title, subtitle }) => {
     refetchOnMountOrArgChange: true,
   });
 
+  console.log('WatchlistTable', error);
+
   return (
     <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-3 lg:py-3 mx-auto">
       <div className="flex flex-col">
@@ -26,9 +28,9 @@ const WatchlistTable = ({ title, subtitle }) => {
                 </p>
               </div>
               {error && (
-                <div className="flex mt-1">
+                <div className="flex mt-4 ml-4">
                   <Alert show={true} onDismiss={() => {}}>
-                    <span className="font-semibold">Error:</span> {error}
+                    <span className="font-semibold">Error: </span>Unable to fetch watchlist
                   </Alert>
                 </div>
               )}

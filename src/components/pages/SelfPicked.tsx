@@ -17,7 +17,7 @@ const SelfPicked = () => {
     <header>
       <p className="mb-2 text-sm font-semibold text-blue-600">Selections</p>
       <h1 className="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">
-        Self Picked: Based on daily selection to subscribe
+        Watchlist: Based on daily subscribed selections
       </h1>
       <p className="mt-2 text-lg text-gray-800 dark:text-gray-400">
         Suggest to pick from daily selection and put into watch list, if price
@@ -40,8 +40,7 @@ const SelfPicked = () => {
       {fetchError && (
         <div className="flex mt-4">
           <Alert show={true} onDismiss={() => {}}>
-            <span className="font-semibold">Error:</span>{' '}
-            {fetchError.data.message}
+            <span className="font-semibold">Error: </span>Unable to fetch watchlist
           </Alert>
         </div>
       )}

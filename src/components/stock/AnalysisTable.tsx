@@ -12,7 +12,7 @@ import { V1ListSelectionResponse } from '../../features/apis/jarvisApi';
 
 const AnalysisTable = ({ title, subtitle }) => {
   const today = new Date();
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(formatDate(today));
   const [data, setData] = useState<V1ListSelectionResponse | null>(null);
   const [selectionApi] = jarvisApi.useJarvisV1ListSelectionsMutation();
@@ -37,7 +37,8 @@ const AnalysisTable = ({ title, subtitle }) => {
 
       setData(selectionData);
     } catch (e) {
-      setError(e.message);
+      console.log('AnalysisTable', e);
+      setError(e);
     }
   };
 
@@ -65,9 +66,9 @@ const AnalysisTable = ({ title, subtitle }) => {
                 </div>
               </div>
               {error && (
-                <div className="flex mt-1">
+                <div className="flex mt-4 ml-4">
                   <Alert show={true} onDismiss={() => {}}>
-                    <span className="font-semibold">Error:</span> {error}
+                    <span className="font-semibold">Error: </span>Unable to fetch daily analysis
                   </Alert>
                 </div>
               )}

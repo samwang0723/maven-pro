@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const Stat = () => {
   const [orderApi] = jarvisApi.useJarvisV1ListOrdersMutation();
-  const { data } = jarvisApi.useJarvisV1GetBalanceQuery(null, {
+  const { data, error } = jarvisApi.useJarvisV1GetBalanceQuery(null, {
     refetchOnMountOrArgChange: true,
   });
   const [openOrder, setOpenOrder] = useState(0);
@@ -37,8 +37,11 @@ const Stat = () => {
       setAvgProfit(totalProfit / orderData.entries.length);
       setOpenOrder(openOrderCount);
     } catch (e) {
+      console.log('fetchOrders error', e);
     }
   };
+
+  console.log('useJarvisV1GetBalanceQuery', error);
 
   useEffect(() => {
     fetchOrders();
