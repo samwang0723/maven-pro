@@ -5,7 +5,7 @@ import StockCard from '../widget/StockCard';
 
 const Dashboard = () => {
   return (
-    <>
+    <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-8 mx-auto">
       <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-3 lg:py-3 mx-auto">
         <div className="flex flex-wrap gap-2 items-center mb-4">
           <StockCard id={'TAIEX'} name={'加權指數'} />
@@ -30,7 +30,7 @@ const Dashboard = () => {
           'Pay attention to the concentration changes and the candlestick shape'
         }
       />
-    </>
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ const SelfPicked = () => {
 
   return (
     <header>
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div className="max-w-[85rem] px-1 py-2 sm:px-6 lg:px-8 lg:py-8 mx-auto">
         <p className="mb-2 text-sm font-semibold text-blue-600">Selections</p>
         <h1 className="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">
           Watchlist: Based on daily subscribed selections
