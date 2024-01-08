@@ -244,7 +244,7 @@ const Sidebar = () => {
               className={({ isActive }) =>
                 isActive
                   ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
-                  : 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-white dark:focus:outline-none'
+                  : 'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none'
               }
             >
               <svg
@@ -297,9 +297,13 @@ const Sidebar = () => {
             </Link>
           </li>
           <li onClick={dismissOverlay}>
-            <Link
-              className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none "
+            <NavLink
               to="/faq"
+              className={({ isActive }) =>
+                isActive
+                  ? 'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-900 text-sm text-white rounded-lg dark:focus:outline-none'
+                  : 'flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300 dark:focus:outline-none'
+              }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +322,7 @@ const Sidebar = () => {
                 <path d="M12 17h.01" />
               </svg>
               FAQ
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
