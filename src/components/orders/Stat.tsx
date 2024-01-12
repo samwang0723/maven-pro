@@ -41,7 +41,6 @@ const Stat = () => {
     }
   };
 
-  console.log('useJarvisV1GetBalanceQuery', error);
 
   useEffect(() => {
     fetchOrders();

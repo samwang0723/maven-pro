@@ -2,7 +2,7 @@ import Breadcrumb from './Breadcrumb';
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700">
+    <div className="sticky top-[71px] inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700">
       <div className="flex items-center py-4">
         <button
           type="button"
