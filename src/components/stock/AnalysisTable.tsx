@@ -37,7 +37,6 @@ const AnalysisTable = ({ title, subtitle }) => {
 
       setData(selectionData);
     } catch (e) {
-      console.log('AnalysisTable', e);
       setError(e);
     }
   };

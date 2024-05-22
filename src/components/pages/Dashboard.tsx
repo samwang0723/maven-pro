@@ -18,7 +18,7 @@ const Dashboard = () => {
           />
         </div>
         <Stat />
-      </div>
+      </div> 
 
       <AnalysisTable
         title={'Daily Analysis of outperforming Stocks'}
