@@ -56,7 +56,7 @@ const OrderTable = ({ orders }) => {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Type
@@ -64,7 +64,7 @@ const OrderTable = ({ orders }) => {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Buy
@@ -72,7 +72,7 @@ const OrderTable = ({ orders }) => {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Sell
@@ -81,7 +81,7 @@ const OrderTable = ({ orders }) => {
 
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Shares
@@ -90,7 +90,7 @@ const OrderTable = ({ orders }) => {
 
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Date
@@ -98,7 +98,7 @@ const OrderTable = ({ orders }) => {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       BEP
@@ -106,7 +106,7 @@ const OrderTable = ({ orders }) => {
                   </th>
                   <th
                     scope="col"
-                    className="px-1 py-3 text-start whitespace-nowrap"
+                    className="px-2 py-3 text-start whitespace-nowrap"
                   >
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       Profit / Loss
@@ -130,7 +130,7 @@ const OrderTable = ({ orders }) => {
                           </div>
                         </div>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="text-sm text-gray-800 dark:text-white">
                           {entity.buyExchangeDate ===
                           entity.sellExchangeDate ? (
@@ -144,18 +144,18 @@ const OrderTable = ({ orders }) => {
                           )}
                         </span>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="text-sm text-gray-800 dark:text-white">
                           {parseFloat(entity.buyPrice).toFixed(2)}
                         </span>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="text-sm text-gray-800 dark:text-white">
                           {parseFloat(entity.sellPrice).toFixed(2)}
                         </span>
                       </td>
 
-                      <td className="h-px w-px whitespace-nowrap py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="text-sm text-gray-800 dark:text-white">
                           {parseInt(entity.buyQuantity, 10) * 1000 > 0
                             ? quantityFormatter.format(
@@ -166,19 +166,19 @@ const OrderTable = ({ orders }) => {
                               )}
                         </span>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap px-1 py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs text-sm font-small bg-gray-600 text-white">
                           {entity.buyExchangeDate !== ''
                             ? formatDate(entity.buyExchangeDate)
                             : formatDate(entity.sellExchangeDate)}
                         </span>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap px-1 py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <span className="text-sm font-bold text-gray-800 dark:text-white">
                           {parseFloat(entity.profitablePrice).toFixed(2)}
                         </span>
                       </td>
-                      <td className="h-px w-px whitespace-nowrap px-1 py-3">
+                      <td className="h-px w-px whitespace-nowrap px-2 py-3">
                         <ProfitDisplay
                           profit={formatter.format(entity.profitLoss)}
                           quoteChange={entity.profitLossPercent}
