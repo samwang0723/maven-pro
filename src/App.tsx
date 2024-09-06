@@ -18,6 +18,7 @@ import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import Calendar from './components/pages/Calendar';
+import TradingDashboard from './components/dashboard/Sample';
 
 // Create a context for theme management
 const ThemeContext = createContext({
@@ -142,7 +143,7 @@ const App: React.FC = () => {
               </RequireAuth>
             }
           >
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<TradingDashboard />} />
             <Route path="/watchlist" element={<SelfPicked />} />
             <Route path="/analysis" element={<DailyAnalysis />} />
             <Route path="/faq" element={<Faq />} />
